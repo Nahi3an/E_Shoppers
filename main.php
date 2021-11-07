@@ -4,9 +4,9 @@ include_once './header.php';
 ?>
 
 
-<main>
+<main style="height:500px">
 
-    <p>This is home page </p>
+    <h1>This is home page </h1>
 
 </main>
 

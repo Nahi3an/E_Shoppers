@@ -9,6 +9,6 @@
 </head>
 
 <body>
-    <nav>
+    <nav style="height:50px; border: 1px solid black">
         <p>This is a nav bar</p>
     </nav>
