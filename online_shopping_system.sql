@@ -3,7 +3,7 @@ CREATE TABLE users (
     user_id int NOT NULL AUTO_INCREMENT,
     user_email varchar(70) NOT NULL,
     user_password  varchar (70),
-    user_roll      varchar (70),
+    user_role    varchar (70),
     PRIMARY KEY (user_id)
 )
 
