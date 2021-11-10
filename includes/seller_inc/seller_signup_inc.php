@@ -1,6 +1,5 @@
 <?php
 
-
 if (isset($_POST['seller_signup'])) {
 
     include_once '../dbh_inc.php';
@@ -12,8 +11,11 @@ if (isset($_POST['seller_signup'])) {
     $sellerPasswordRepeat = $_POST['seller_password_confirm'];
     $role = 'seller';
 
-    signupUser($conn, $sellerEmail, $sellerPassword, $role);
-    $userId = getUserId($conn, $sellerEmail);
+    $signedUp = signupUser($conn, $sellerEmail, $sellerPassword, $role);
 
-    signupSeller($conn, $sellerName, $sellerEmail, $userId);
+    if ($signedUp) {
+        $userId = getUserId($conn, $sellerEmail);
+
+        signupSeller($conn, $sellerName, $sellerEmail, $userId);
+    }
 }

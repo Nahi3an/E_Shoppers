@@ -50,13 +50,19 @@ CREATE TABLE category(
 )
 
 CREATE TABLE product(
+    
     product_id  int NOT NULL AUTO_INCREMENT,
     product_name     varchar(70) NOT NULL,
     product_unit_price   DECIMAL(10,2) NOT NULL,
     product_description    varchar(70) NOT NULL,
+    product_quanity  BIGINT NOT NULL,
+    upload_date    date NOT NULL,
     category_id int,
+    seller_id int,
     PRIMARY KEY (product_id),
-    FOREIGN KEY (category_id) REFERENCES category( category_id)
+    FOREIGN KEY (category_id) REFERENCES category( category_id),
+    FOREIGN KEY (seller_id) REFERENCES seller(seller_id)
+
 )
 
 CREATE TABLE `order`(
@@ -79,10 +85,10 @@ CREATE TABLE upload(
     upload_date    date NOT NULL,
     upload_product_quanity  BIGINT NOT NULL,
     product_id int,
-    customer_id int,
+    seller_id int,
     PRIMARY KEY (upload_id),
     FOREIGN KEY (product_id) REFERENCES product(product_id),
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+    FOREIGN KEY (seller_id) REFERENCES seller(seller_id)
 )
 
 CREATE  TABLE sales_report (
@@ -98,3 +104,12 @@ CREATE  TABLE sales_report (
     FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
     FOREIGN KEY (seller_id) REFERENCES seller(seller_id)
 )
+
+
+INSERT INTO category ( category_id, category_name )
+VALUES
+( '', 'Monitor' ), 
+( '', 'Laptop' ),
+( '','Mouse'),
+('','Keyboard');
+
