@@ -1,5 +1,15 @@
 <?php
+
+session_start();
+
+
+if (!isset($_SESSION['user_id'])) {
+
+    header('location:/online_shopping_system/login.php');
+}
+
 include_once './seller_header.php';
+
 
 
 ?>
@@ -9,6 +19,8 @@ include_once './seller_header.php';
     <h1>
         Seller Profile Information
     </h1>
+
+
 
 </div>
 

@@ -131,6 +131,9 @@ function loginUser($conn, $userEmail, $userPassword)
             $userInfo['user_role'] = $row['user_role'];
         }
 
+        $_SESSION["user_id"] = $userInfo['user_id'];
+        $_SESSION['user_role'] =  $userInfo['user_role'];
+
         if ($userInfo['user_role'] === 'admin') {
 
 
@@ -147,7 +150,7 @@ function loginUser($conn, $userEmail, $userPassword)
 
                 if ($userInfo['user_role'] === 'seller') {
 
-                    $_SESSION["user_id"] = $userInfo['user_id'];
+
 
                     header('location:/online_shopping_system/seller/seller_dashboard.php');
                 } else if ($userInfo['user_role'] === 'customer') {
