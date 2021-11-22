@@ -12,7 +12,7 @@ session_start();
 
 <div class="seller-add-product container">
 
-    <form action="/online_shopping_system/includes/seller_inc/seller_add_product_inc.php" method="GET">
+    <form action="/online_shopping_system/includes/seller_inc/seller_add_product_inc.php" method="POST" enctype="multipart/form-data">
         <input type="text" name="user_id" hidden value="<?php echo $_SESSION["user_id"]; ?>">
         <div class="mb-3">
             <label class="form-label">Product Name</label> <br>
@@ -44,10 +44,31 @@ session_start();
             </select> <br>
         </div>
         <div class="mb-3">
+            <input type="file" name="my_image" accept="image/png, image/jpg, image/jpeg" onchange='loadImage(event)' />
+            <img width="400" height="400" class="img-thumbnail" alt="" id="product-image-1">
+        </div>
+        <div class="mb-3">
+            <input type="file" name="product_image_2" accept="image/png, image/jpg, image/jpeg" onchange='loadImage(event)' />
+            <img width="400" height="400" class="img-thumbnail" alt="" id="product-image-2">
+        </div>
+        <div class="mb-3">
             <input type="submit" value="Upload" class="btn btn-info" name="add_product"><br>
         </div>
     </form>
+    <script>
+        var loadImage = function(event) {
 
+            if (event.target.name == 'my_image') {
+                let image1 = document.getElementById('product-image-1');
+                image1.src = URL.createObjectURL(event.target.files[0]);
+            } else {
+                let image2 = document.getElementById('product-image-2');
+                image2.src = URL.createObjectURL(event.target.files[0]);
+
+            }
+
+        };
+    </script>
 
 </div>
 

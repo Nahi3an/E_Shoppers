@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+
+// echo $_SESSION['user_id'] . "<br>";
+// echo $_SESSION['user_role'] . "<br>";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,9 +19,7 @@
 </head>
 
 <body class="">
-    <!-- <nav style="height:50px; border: 1px solid black">
-        <p>This is a nav bar</p>
-    </nav> -->
+
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -31,7 +38,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="/online_shopping_system/signup.php">Signup</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Product
                         </a>
@@ -45,11 +52,33 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="#">Contact Us</a>
                     </li>
+
+                    <?php
+
+                    if (isset($_SESSION['user_role']) && isset($_SESSION['user_id'])) {
+
+                        echo '<li class="nav-item dropdown ">
+                              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Profile
+                              </a>
+                              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="/online_shopping_system/customer/customer_dashboard.php">Go To Profile</a></li>
+                                  <li>
+                                  <form action="/online_shopping_system/logout.php" method="POST">
+                                      <input type="submit" value="Logout" class="dropdown-item" name="logout_btn">
+                                  </form>
+                                  </li>
+                              </ul>
+                            </li>';
+                    }
+
+                    ?>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+
             </div>
         </div>
     </nav>

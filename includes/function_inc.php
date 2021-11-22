@@ -149,14 +149,10 @@ function loginUser($conn, $userEmail, $userPassword)
             if (password_verify($userPassword, $userInfo['user_password']) && $userEmail === $userInfo['user_email']) {
 
                 if ($userInfo['user_role'] === 'seller') {
-
-
-
                     header('location:/online_shopping_system/seller/seller_dashboard.php');
                 } else if ($userInfo['user_role'] === 'customer') {
 
                     header('location:/online_shopping_system/main.php');
-                    //echo "User is customer ";
                 }
             } else {
 
@@ -239,19 +235,75 @@ function allCategory($conn)
     return  $categories;
 }
 
-function   addSellerProduct($conn, $productName, $productUnitPrice, $productDescription, $productQuantity,  $uploadDate, $categoryId, $sellerId)
+function addSellerProduct($conn, $productName, $productUnitPrice, $productDescription, $productQuantity,  $uploadDate, $categoryId, $sellerId, $imgId1, $imgId2)
 {
 
+    // echo $imgId1 . " " . $imgId2;
     $categoryId = explode(" - ", $categoryId);
     $categoryId =  $categoryId[0];
+
+
+    //product_id 	product_name 	product_unit_price 	product_description 	product_quanity 	upload_date 	category_id 	seller_id 	product_img_1 	product_img_2
     //product_id 	product_name 	product_unit_price 	product_description 	product_quanity 	upload_date 	category_id 	seller_id
-    $sql = "INSERT INTO product(product_name,product_unit_price,product_description,product_quanity,upload_date,category_id,seller_id)
-            VALUES ('$productName', '$productUnitPrice', '$productDescription', '$productQuantity',  '$uploadDate', '$categoryId', '$sellerId')";
+    $sql = "INSERT INTO product(product_name,product_unit_price,product_description,product_quanity,upload_date,category_id,seller_id,	       product_img_1,product_img_2)
+            VALUES ('$productName', '$productUnitPrice', '$productDescription', '$productQuantity',  '$uploadDate', '$categoryId', '$sellerId', '$imgId1 ',' $imgId2')";
 
     $res = mysqli_query($conn, $sql);
 
     if ($res) {
 
         header('location:/online_shopping_system/seller/seller_add_product.php');
+    } else {
+
+        echo "Error!";
+    }
+}
+
+function compressImage($uploadImage, $imgType)
+{
+
+    // echo "<pre>";
+    // print_r($uploadImage);
+    // echo "</pre>";
+
+    $img_name = $uploadImage['name'];
+    $img_type = $uploadImage['type'];
+    //$img_size = $uploadImage['size'];
+    $tmp_name = $uploadImage['tmp_name'];
+    $error = $uploadImage['error'];
+
+
+    // ;
+    if ($error == 0) {
+
+        if ($img_type == 'image/png') {
+            $inputImg = imagecreatefrompng($tmp_name);
+        } else {
+
+            $inputImg = imagecreatefromjpeg($tmp_name);
+        }
+
+
+        if (isset($inputImg)) {
+
+            $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+            $img_ex_lc = strtolower($img_ex);
+            $allowed_exs = array("jpg", "jpeg", "png");
+            if (in_array($img_ex_lc, $allowed_exs)) {
+
+
+                if ($imgType == 'product') {
+
+                    $imgId = uniqid('PIMG-') . '.jpg';
+                    $outputImagePath = '../../img/product_img/' .  $imgId;
+                }
+
+                //echo $outputImagePath;
+
+                imagejpeg($inputImg, $outputImagePath, 50);
+
+                return $imgId;
+            }
+        }
     }
 }
