@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-info">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Seller Panel</a>
+            <a class="navbar-brand" href="./seller_dashboard.php">Seller Panel</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -33,13 +33,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Orders</a>
                     </li>
-                    <li class="nav-item">
-                        <form action="/online_shopping_system/logout.php" method="POST">
-                            <button type="submit" name="logout_btn" class="btn btn-small btn-danger">Logout</button>
-                        </form>
-
-                    </li>
                 </ul>
             </div>
+            <li class="nav-item">
+                <form action="/online_shopping_system/logout.php" method="POST">
+                    <button type="submit" name="logout_btn" class="btn btn-small btn-danger">Logout</button>
+                </form>
+
+            </li>
         </div>
     </nav>

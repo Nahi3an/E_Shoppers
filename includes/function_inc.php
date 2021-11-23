@@ -33,7 +33,6 @@ function signupUser($conn, $userEmail, $userPassword, $userRole)
         $res = mysqli_query($conn, $sql);
 
         if ($res) {
-
             //  echo "User Created";
             return  $userId;
         } else {
@@ -48,33 +47,32 @@ function signupUser($conn, $userEmail, $userPassword, $userRole)
 function generateId($conn, $tableName)
 {
 
-    if ($tableName == 'users') {
-        $id = "user_id";
-    } else {
-        $id = $tableName . "_id";
-    }
 
-    $sql = "SELECT $id
-            FROM $tableName";
+    $sql = "SELECT id
+            FROM $tableName
+            ORDER BY id ASC";
 
     $res = mysqli_query($conn, $sql);
     $ids = array();
     if ($res->num_rows > 0) {
         while ($row = $res->fetch_assoc()) {
 
-            array_push($ids, $row[$id]);
+            // echo $row['id'];
+            array_push($ids, $row['id']);
         }
     }
+
 
 
     if (empty($ids)) {
         $mainId =  '1';
     } else {
-        $lastId =  $ids[sizeof($ids) - 1];
-        $lastId = explode('#', $lastId);
-        $lastId = (int) $lastId[1];
-        $mainId = $lastId + 1;
+
+        $lastId = $ids[sizeof($ids) - 1];
+
+        $mainId =  $lastId + 1;
     }
+
 
     return  $mainId;
 }
@@ -286,14 +284,20 @@ function allCategory($conn)
 function addSellerProduct($conn, $productName, $productUnitPrice, $productDescription, $productQuantity,  $uploadDate, $categoryId, $sellerId, $imgId1, $imgId2)
 {
 
-    // echo $imgId1 . " " . $imgId2;
+
     $categoryId = explode(" - ", $categoryId);
     $categoryId =  $categoryId[0];
 
+    $id = generateId($conn, 'product');
 
+    $productId = 'PROD#00' . $id;
 
-    $sql = "INSERT INTO product(product_name,product_unit_price,product_description,product_quanity,upload_date,category_id,seller_id,	       product_img_1,product_img_2)
-            VALUES ('$productName', '$productUnitPrice', '$productDescription', '$productQuantity',  '$uploadDate', '$categoryId', '$sellerId', '$imgId1','$imgId2')";
+    $sql = "INSERT INTO 
+            product(product_id,product_name,product_unit_price,product_description,product_quanity,
+                    upload_date,product_image_1,product_image_2,category_id,seller_id)
+            VALUES ('$productId','$productName','$productUnitPrice','$productDescription','$productQuantity',  
+                    '$uploadDate','$imgId1','$imgId2','$categoryId', '$sellerId')";
+
 
     $res = mysqli_query($conn, $sql);
 
@@ -309,9 +313,7 @@ function addSellerProduct($conn, $productName, $productUnitPrice, $productDescri
 function compressImage($uploadImage, $imgType)
 {
 
-    // echo "<pre>";
-    // print_r($uploadImage);
-    // echo "</pre>";
+
 
     $img_name = $uploadImage['name'];
     $img_type = $uploadImage['type'];
@@ -330,7 +332,6 @@ function compressImage($uploadImage, $imgType)
 
 
         if (isset($inputImg)) {
-
 
             $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
             $img_ex_lc = strtolower($img_ex); //png / jpg / jpeg
@@ -437,5 +438,29 @@ function sellerInfoUpdate($conn, $sellerId, $userId, $sellerName, $sellerEmail, 
                   alert('Seller Information Update Unsuccesful');
                   window.location.href='/online_shopping_system/seller/seller_dashboard.php';
                   </script>";
+    }
+}
+
+
+function  addCategory($conn, $categoryName)
+{
+
+    $id = generateId($conn, 'category');
+
+    $categoryId = "CAT#00" . $id;
+
+    // echo $categoryId;
+
+    // exit();
+    $sql = "INSERT INTO category(category_id,category_name)
+            VALUES('$categoryId','$categoryName')";
+    $res = mysqli_query($conn, $sql);
+
+    if ($res) {
+
+        header('location:/online_shopping_system/admin/admin_category.php');
+    } else {
+
+        echo "Error!";
     }
 }

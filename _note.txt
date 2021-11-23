@@ -30,7 +30,7 @@ dibbo@gmail.co  dibbo@123
     10.	AVITA Essential 14 Celeron N4020 256GB SSD 14" Full HD Laptop Matt White Color
 
 2.Desktop
-    1.Asus PN40 Celeron Dual Core Mini PC
+    1.Asus PN40 Celeron Dual Core Mini PC : 15000
     2.ASRock DeskMini H470 Portable Mini PC
     3. Star PC AMD Athlon 3000G
     4. Flash Sale Pentium Gold G5420 8th Gen Special PC
@@ -55,7 +55,6 @@ dibbo@gmail.co  dibbo@123
 
 
 4.Graphics Card
-    1.	Deepcool GH-01 A-RGB Graphics Card Holder
     2.	Colorful GeForce GT710-2GD3-V 2GB Graphics Card
     3.	Gigabyte GT 710 2GB DDR3 Graphics Card
     4.	Zotac GeForce GT 710 2GB DDR3 Graphics Card
@@ -128,7 +127,7 @@ dibbo@gmail.co  dibbo@123
     10.	Zeblaze VIBE 6 Smart Watch
 
 
-10.Gadget
+10.Accesorries
     1.	Baseus GA03 Level 3 Helmet PUBG Gadget
     2.	DJI OM 5 3 Axis Stable Gimbal
     3.	Google Chromecast With Google TV
@@ -139,6 +138,7 @@ dibbo@gmail.co  dibbo@123
     8.	DJI OM 4 SE 3 Axis Stable Gimbal
     9.	Ugreen Air Vent Mount Phone Holder 
     10.	Google H2C Nest Mini 2nd Generation Voice Assistant
+    11.Deepcool GH-01 A-RGB Graphics Card Holder
 
 
 

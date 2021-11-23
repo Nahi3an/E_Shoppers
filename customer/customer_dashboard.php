@@ -1,18 +1,22 @@
 <?php
+// session_start();
+
+
+include_once '../header.php';
+include_once '../includes/dbh_inc.php';
+include_once '../includes/function_inc.php';
+
 if (!isset($_SESSION['user_id'])) {
 
     header('location:/online_shopping_system/main.php');
 }
 
-include_once '../header.php';
-include_once '../includes/dbh_inc.php';
-include_once '../includes/function_inc.php';
 $customerInformation = getCustomerInfo($conn, $_SESSION['user_id']);
-
 
 ?>
 
 <div class="customer-dashboard container">
+    <br> <br>
     <h3>Customer Profile Information</h3>
 
     <form action="/online_shopping_system/includes/customer_inc/customer_update_info_inc.php" method="POST">

@@ -1,9 +1,8 @@
 <?php
 
-session_start();
-
 // echo $_SESSION['user_id'] . "<br>";
 // echo $_SESSION['user_role'] . "<br>";
+session_start();
 
 ?>
 
@@ -32,12 +31,19 @@ session_start();
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/online_shopping_system/main.php">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/online_shopping_system/login.php">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/online_shopping_system/signup.php">Signup</a>
-                    </li>
+                    <?php
+
+                    if (!isset($_SESSION['user_role']) && !isset($_SESSION['user_id'])) {
+                    ?>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/online_shopping_system/login.php">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/online_shopping_system/signup.php">Signup</a>
+                        </li>
+                    <?php }
+
+                    ?>
                     <li class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Product
@@ -57,6 +63,7 @@ session_start();
 
                     if (isset($_SESSION['user_role']) && isset($_SESSION['user_id'])) {
 
+                        // echo $_SESSION['user_id'];
                         echo '<li class="nav-item dropdown ">
                               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                               Profile
