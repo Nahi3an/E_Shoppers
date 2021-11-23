@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-info">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Seller Panel</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,7 @@
                     </li>
                     <li class="nav-item">
                         <form action="/online_shopping_system/logout.php" method="POST">
-                            <button type="submit" name="logout_btn" class="btn btn-small btn-info">Logout</button>
+                            <button type="submit" name="logout_btn" class="btn btn-small btn-danger">Logout</button>
                         </form>
 
                     </li>

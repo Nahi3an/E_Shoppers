@@ -12,6 +12,9 @@ session_start();
 
 <div class="seller-add-product container">
 
+    <br>
+    <h4>Fill Up Product Information</h4>
+
     <form action="/online_shopping_system/includes/seller_inc/seller_add_product_inc.php" method="POST" enctype="multipart/form-data">
         <input type="text" name="user_id" hidden value="<?php echo $_SESSION["user_id"]; ?>">
         <div class="mb-3">
@@ -43,7 +46,7 @@ session_start();
             </select> <br>
         </div>
         <div class="mb-3">
-            <input type="file" name="my_image" accept="image/png, image/jpg, image/jpeg" onchange='loadImage(event)' />
+            <input type="file" name="product_image_1" accept="image/png, image/jpg, image/jpeg" onchange='loadImage(event)' />
             <img width="400" height="400" class="img-thumbnail" alt="" id="product-image-1">
         </div>
         <div class="mb-3">
@@ -57,7 +60,7 @@ session_start();
     <script>
         var loadImage = function(event) {
 
-            if (event.target.name == 'my_image') {
+            if (event.target.name == 'product_image_1') {
                 let image1 = document.getElementById('product-image-1');
                 image1.src = URL.createObjectURL(event.target.files[0]);
             } else {

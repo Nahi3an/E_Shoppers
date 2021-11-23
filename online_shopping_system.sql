@@ -53,6 +53,8 @@ CREATE TABLE product(
     product_description    varchar(70) NOT NULL,
     product_quanity  BIGINT NOT NULL,
     upload_date    date NOT NULL,
+    product_image_1 varchar(255);
+    product_image_2 varchar(255);
     category_id varchar(255),
     seller_id varchar(255),
     PRIMARY KEY (product_id),

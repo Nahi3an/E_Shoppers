@@ -1,24 +1,27 @@
 <?php
 include_once './seller_header.php';
-include_once './includes/dbh_inc.php';
-include_once './includes/function_inc.php';
+include_once '../includes/dbh_inc.php';
+include_once '../includes/function_inc.php';
 
-getProductOfSeller($conn);
+
+// getProductOfSeller($conn);
+
+// 
+
 
 ?>
 
-<div class="seller-all-product">
+<div class="seller-all-product container">
 
     <table class="table align-middle">
         <thead>
             <tr>
                 <th scope="col">Product Name</th>
+                <th scope="col">Product Category</th>
                 <th scope="col">Unit Price</th>
+                <th scope="col">Upload Date</th>
                 <th scope="col">Update</th>
                 <th scope="col">Delete</th>
-
-
-
             </tr>
         </thead>
         <tbody>

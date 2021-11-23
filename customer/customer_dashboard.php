@@ -1,4 +1,9 @@
 <?php
+if (!isset($_SESSION['user_id'])) {
+
+    header('location:/online_shopping_system/main.php');
+}
+
 include_once '../header.php';
 include_once '../includes/dbh_inc.php';
 include_once '../includes/function_inc.php';

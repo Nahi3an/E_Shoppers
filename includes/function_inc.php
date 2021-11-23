@@ -204,13 +204,13 @@ function loginUser($conn, $userEmail, $userPassword)
 
 function getSellerInfo($conn, $userId)
 {
-    $sql = "SELECT seller_id, seller_name, seller_email, seller_contact_number,seller_address
+    $sql = "SELECT seller_id, seller_name,seller_contact_number,seller_address
             FROM seller
-            WHERE user_id=$userId";
+            WHERE user_id='$userId'";
 
     $res = mysqli_query($conn, $sql);
 
-    $sellerInfo = array('seller_id' => ' ', 'seller_name' => ' ', 'seller_email' => ' ', 'seller_contact_number' => ' ', 'seller_address' => ' ');
+    $sellerInfo = array('seller_id' => '', 'seller_name' => '', 'seller_contact_number' => '', 'seller_address' => '', 'seller_email' => '');
 
     if ($res->num_rows > 0) {
 
@@ -218,22 +218,34 @@ function getSellerInfo($conn, $userId)
 
             $sellerInfo['seller_id'] =  $row['seller_id'];
             $sellerInfo['seller_name'] =  $row['seller_name'];
-            $sellerInfo['seller_email'] = $row['seller_email'];
             $sellerInfo['seller_contact_number'] = $row['seller_contact_number'];
             $sellerInfo['seller_address'] = $row['seller_address'];
         }
     }
 
+    $sql = "SELECT user_email
+            FROM users 
+            WHERE user_id='$userId'";
+
+    $res = mysqli_query($conn, $sql);
+
+    if ($res->num_rows > 0) {
+
+        while ($row = $res->fetch_assoc()) {
+
+            $sellerInfo['seller_email'] = $row['user_email'];
+        }
+    }
     return  $sellerInfo;
 }
 
 
-function getProductOfSeller($conn)
+function getProductOfSeller($conn, $sellerId)
 {
 
-    $sql = "SELECT id, supplier_id,supplier_name, supplier_address, supplier_contact_number
-            FROM supplier
-            ORDER BY supplier_id ASC";
+    $sql = "SELECT seller_id,seller_name, seller_address, seller_contact_number
+            FROM porduct
+            ORDER BY seller_id";
 
     $res = mysqli_query($conn, $sql);
     $sellerProducts = array();
@@ -242,7 +254,7 @@ function getProductOfSeller($conn)
 
         while ($row = $res->fetch_assoc()) {
 
-            $sellerProduct = array('id' => $row['id'], 'supplier_id' => $row['supplier_id'], 'supplier_name' => $row['supplier_name'], 'supplier_address' => $row['supplier_address'], 'supplier_contact_number' => $row['supplier_contact_number']);
+            $sellerProduct = array('id' => $row['id'], 'seller_id' => $row['seller_id'], 'seller_name' => $row['seller_name'], 'seller_address' => $row['seller_address'], 'seller_contact_number' => $row['seller_contact_number']);
             array_push($sellerProducts, $sellerProduct);
         }
     }
@@ -376,10 +388,10 @@ function getCustomerInfo($conn, $userId)
 }
 
 function customerInfoUpdate($conn, $customerId, $userId, $customerName, $customerEmail, $customerContactNumber, $customerAddress)
-{;
+{
     $sql = "UPDATE customer
-    SET customer_name = '$customerName', customer_contact_number= '$customerContactNumber', customer_address= '$customerAddress'
-    WHERE customer_id = '$customerId'";
+            SET customer_name = '$customerName', customer_contact_number= '$customerContactNumber', customer_address= '$customerAddress'
+            WHERE customer_id = '$customerId'";
 
     $res1 = mysqli_query($conn, $sql);
 
@@ -388,16 +400,42 @@ function customerInfoUpdate($conn, $customerId, $userId, $customerName, $custome
             WHERE user_id  = '$userId'";
 
     $res2 = mysqli_query($conn, $sql);
-    // exit();
     if ($res1 && $res2) {
         echo "<script>
-                  alert('Update Succesful');
+                  alert('Customer Information Update Succesful');
                   window.location.href='/online_shopping_system/customer/customer_dashboard.php';
                   </script>";
     } else {
         echo "<script>
-                  alert('Update Unsuccesful');
+                  alert('Customer Information Update Unsuccesful');
                   window.location.href='/online_shopping_system/customer/customer_dashboard.php';
+                  </script>";
+    }
+}
+
+function sellerInfoUpdate($conn, $sellerId, $userId, $sellerName, $sellerEmail, $sellerContactNumber, $sellerAddress)
+{
+
+    $sql = "UPDATE seller
+            SET seller_name = '$sellerName', seller_contact_number= '$sellerContactNumber', seller_address= '$sellerAddress'
+            WHERE seller_id = '$sellerId'";
+
+    $res1 = mysqli_query($conn, $sql);
+
+    $sql = "UPDATE users
+            SET user_email = '$sellerEmail'
+            WHERE user_id  = '$userId'";
+
+    $res2 = mysqli_query($conn, $sql);
+    if ($res1 && $res2) {
+        echo "<script>
+                  alert('Seller Information Update Succesful');
+                  window.location.href='/online_shopping_system/seller/seller_dashboard.php';
+                  </script>";
+    } else {
+        echo "<script>
+                  alert('Seller Information Update Unsuccesful');
+                  window.location.href='/online_shopping_system/seller/seller_dashboard.php';
                   </script>";
     }
 }
