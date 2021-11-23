@@ -33,7 +33,6 @@ session_start();
         <div class="mb-3">
             <label class="form-label">Product Category</label><br>
             <select name="category_id">
-
                 <?php
                 foreach ($categories as $category) {
                     echo "Id: <option>" . $category['category_id'] . " - " . $category['category_name']  . "</option>";

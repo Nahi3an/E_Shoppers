@@ -1,6 +1,7 @@
 
 CREATE TABLE users (
-    user_id int NOT NULL AUTO_INCREMENT,
+    id int NOT NULL AUTO_INCREMENT,
+    user_id varchar(255) NOT NULL UNIQUE,
     user_email varchar(70) NOT NULL,
     user_password  varchar (70),
     user_role    varchar (70),
@@ -8,24 +9,26 @@ CREATE TABLE users (
 )
 
 CREATE TABLE customer(
-    customer_id int NOT NULL AUTO_INCREMENT,
+    id int NOT NULL AUTO_INCREMENT,
+    customer_id varchar(255) NOT NULL UNIQUE,
     customer_name  varchar(70)  NOT NULL, 
     customer_email  varchar(70) NOT NULL,
     customer_contact_number  varchar(70),
-    customer_adderess         varchar(70),
-    user_id int,
-    PRIMARY KEY (customer_id),
+    customer_address         varchar(70),
+    user_id varchar(255),
+    PRIMARY KEY (customer_id ),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 
 )
 
 CREATE TABLE seller(
-    seller_id int NOT NULL AUTO_INCREMENT,
+    id int NOT NULL AUTO_INCREMENT,
+    seller_id varchar(255) NOT NULL UNIQUE,
     seller_name  varchar(70)  NOT NULL, 
     seller_email  varchar(70) NOT NULL,
     seller_contact_number  varchar(70),
     seller_address         varchar(70),
-    user_id int,
+    user_id varchar(255),
     PRIMARY KEY (seller_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 
@@ -33,47 +36,50 @@ CREATE TABLE seller(
 
 
 CREATE TABLE admin(
-    admin_id int NOT NULL AUTO_INCREMENT,
+    id int NOT NULL AUTO_INCREMENT,
+    admin_id varchar(255) NOT NULL UNIQUE,
     admin_name  varchar(70)  NOT NULL, 
     admin_email  varchar(70) NOT NULL,
     admin_contact_number  varchar(70),
-    user_id int,
+    user_id varchar(255),
     PRIMARY KEY (admin_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 )
 
 CREATE TABLE category(
-    category_id int NOT NULL AUTO_INCREMENT,
+    id int NOT NULL AUTO_INCREMENT,
+    category_id varchar(255) NOT NULL UNIQUE,
     category_name varchar(70)  NOT NULL,
     PRIMARY KEY (category_id)
     
 )
 
 CREATE TABLE product(
-    
-    product_id  int NOT NULL AUTO_INCREMENT,
+    id  int NOT NULL AUTO_INCREMENT,
+    product_id  varchar(255) NOT NULL UNIQUE,
     product_name     varchar(70) NOT NULL,
     product_unit_price   DECIMAL(10,2) NOT NULL,
     product_description    varchar(70) NOT NULL,
     product_quanity  BIGINT NOT NULL,
     upload_date    date NOT NULL,
-    category_id int,
-    seller_id int,
+    category_id varchar(255),
+    seller_id varchar(255),
     PRIMARY KEY (product_id),
-    FOREIGN KEY (category_id) REFERENCES category( category_id),
+    FOREIGN KEY (category_id) REFERENCES category(category_id),
     FOREIGN KEY (seller_id) REFERENCES seller(seller_id)
 
 )
 
-CREATE TABLE `order`(
-    `order_id`  int NOT NULL AUTO_INCREMENT,
+CREATE TABLE order(
+    id  int NOT NULL AUTO_INCREMENT,
+    order_id  varchar(255) NOT NULL UNIQUE,
     order_date  date  NOT NULL,
     order_quantity  BIGINT NOT NULL,
     order_price     DECIMAL(10,2) NOT NULL,
     order_payment_method   varchar(70) NOT NULL,
-    product_id int,
-    customer_id int,
-    seller_id  int ,
+    product_id  varchar(255),
+    customer_id  varchar(255),
+    seller_id  varchar(255),
     PRIMARY KEY (order_id),
     FOREIGN KEY (product_id) REFERENCES product(product_id),
     FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
@@ -81,24 +87,26 @@ CREATE TABLE `order`(
 )
 
 CREATE TABLE upload(
-    upload_id   int NOT NULL AUTO_INCREMENT,
+    id int NOT NULL AUTO_INCREMENT,
+    upload_id  varchar(255) NOT NULL UNIQUE,
     upload_date    date NOT NULL,
     upload_product_quanity  BIGINT NOT NULL,
-    product_id int,
-    seller_id int,
+    product_id  varchar(255),
+    seller_id  varchar(255),
     PRIMARY KEY (upload_id),
     FOREIGN KEY (product_id) REFERENCES product(product_id),
     FOREIGN KEY (seller_id) REFERENCES seller(seller_id)
 )
 
-CREATE  TABLE sales_report (
-    sales_report_id int NOT NULL AUTO_INCREMENT,
+CREATE TABLE sales_report (
+    id int NOT NULL AUTO_INCREMENT,
+    sales_report_id varchar(255) NOT NULL UNIQUE,
     quantity_sold BIGINT NOT NULL,
     quantity_left  BIGINT NOT NULL,
     sold_date   date NOT NULL,
-    product_id  int,
-    customer_id  int,
-    seller_id   int,
+    product_id  varchar(255),
+    customer_id  varchar(255),
+    seller_id   varchar(255),
     PRIMARY KEY (sales_report_id),
     FOREIGN KEY (product_id) REFERENCES product(product_id),
     FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
@@ -106,10 +114,4 @@ CREATE  TABLE sales_report (
 )
 
 
-INSERT INTO category ( category_id, category_name )
-VALUES
-( '', 'Monitor' ), 
-( '', 'Laptop' ),
-( '','Mouse'),
-('','Keyboard');
 

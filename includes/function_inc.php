@@ -243,10 +243,9 @@ function addSellerProduct($conn, $productName, $productUnitPrice, $productDescri
     $categoryId =  $categoryId[0];
 
 
-    //product_id 	product_name 	product_unit_price 	product_description 	product_quanity 	upload_date 	category_id 	seller_id 	product_img_1 	product_img_2
-    //product_id 	product_name 	product_unit_price 	product_description 	product_quanity 	upload_date 	category_id 	seller_id
+
     $sql = "INSERT INTO product(product_name,product_unit_price,product_description,product_quanity,upload_date,category_id,seller_id,	       product_img_1,product_img_2)
-            VALUES ('$productName', '$productUnitPrice', '$productDescription', '$productQuantity',  '$uploadDate', '$categoryId', '$sellerId', '$imgId1 ',' $imgId2')";
+            VALUES ('$productName', '$productUnitPrice', '$productDescription', '$productQuantity',  '$uploadDate', '$categoryId', '$sellerId', '$imgId1','$imgId2')";
 
     $res = mysqli_query($conn, $sql);
 
@@ -273,24 +272,22 @@ function compressImage($uploadImage, $imgType)
     $error = $uploadImage['error'];
 
 
-    // ;
     if ($error == 0) {
 
         if ($img_type == 'image/png') {
             $inputImg = imagecreatefrompng($tmp_name);
         } else {
-
             $inputImg = imagecreatefromjpeg($tmp_name);
         }
 
 
         if (isset($inputImg)) {
 
+
             $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
-            $img_ex_lc = strtolower($img_ex);
+            $img_ex_lc = strtolower($img_ex); //png / jpg / jpeg
             $allowed_exs = array("jpg", "jpeg", "png");
             if (in_array($img_ex_lc, $allowed_exs)) {
-
 
                 if ($imgType == 'product') {
 
@@ -298,12 +295,50 @@ function compressImage($uploadImage, $imgType)
                     $outputImagePath = '../../img/product_img/' .  $imgId;
                 }
 
-                //echo $outputImagePath;
 
                 imagejpeg($inputImg, $outputImagePath, 50);
 
                 return $imgId;
             }
         }
+    }
+}
+
+function getCustomerInfo($conn, $userId)
+{
+    $sql = "SELECT customer_id, customer_name, customer_email, customer_contact_number,customer_adderess
+    FROM customer 
+    WHERE user_id=$userId";
+    $res = mysqli_query($conn, $sql);
+    $customerInformation = '';
+    if ($res->num_rows > 0) {
+
+        while ($row = $res->fetch_assoc()) {
+
+            $customerInformation = array('customer_id' => $row['customer_id'], 'customer_name' => $row['customer_name'], 'customer_email' => $row['customer_email'], 'customer_contact_number' => $row['customer_contact_number'], 'customer_adderess' => $row['customer_adderess']);
+        }
+    }
+
+    return $customerInformation;
+}
+
+function customerInfoUpdate($conn, $customerId, $customerName, $customerEmail, $customerContactNumber, $customerAddress)
+{
+    $sql = "UPDATE customer
+    SET customer_name = '$customerName', customer_email= '$customerEmail', customer_contact_number= '$customerContactNumber', customer_adderess= '$customerAddress'
+    WHERE customer_id = '$customerId'";
+
+    $res = mysqli_query($conn, $sql);
+
+    if ($res) {
+        echo "<script>
+                  alert('Update Succesful');
+                  window.location.href='/online_shopping_system/customer/customer_dashboard.php';
+                  </script>";
+    } else {
+        echo "<script>
+                  alert('Update Unsuccesful');
+                  window.location.href='/online_shopping_system/customer/customer_dashboard.php';
+                  </script>";
     }
 }
