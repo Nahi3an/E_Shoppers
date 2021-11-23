@@ -1,7 +1,6 @@
 
 CREATE TABLE users (
-    id int NOT NULL AUTO_INCREMENT,
-    user_id varchar(255) NOT NULL UNIQUE,
+    user_id varchar(255) NOT NULL ,
     user_email varchar(70) NOT NULL,
     user_password  varchar (70),
     user_role    varchar (70),
@@ -9,10 +8,8 @@ CREATE TABLE users (
 )
 
 CREATE TABLE customer(
-    id int NOT NULL AUTO_INCREMENT,
-    customer_id varchar(255) NOT NULL UNIQUE,
+    customer_id varchar(255) NOT NULL ,
     customer_name  varchar(70)  NOT NULL, 
-    customer_email  varchar(70) NOT NULL,
     customer_contact_number  varchar(70),
     customer_address         varchar(70),
     user_id varchar(255),
@@ -22,10 +19,8 @@ CREATE TABLE customer(
 )
 
 CREATE TABLE seller(
-    id int NOT NULL AUTO_INCREMENT,
-    seller_id varchar(255) NOT NULL UNIQUE,
+    seller_id varchar(255) NOT NULL ,
     seller_name  varchar(70)  NOT NULL, 
-    seller_email  varchar(70) NOT NULL,
     seller_contact_number  varchar(70),
     seller_address         varchar(70),
     user_id varchar(255),
@@ -36,10 +31,8 @@ CREATE TABLE seller(
 
 
 CREATE TABLE admin(
-    id int NOT NULL AUTO_INCREMENT,
-    admin_id varchar(255) NOT NULL UNIQUE,
-    admin_name  varchar(70)  NOT NULL, 
-    admin_email  varchar(70) NOT NULL,
+    admin_id varchar(255) NOT NULL ,
+    admin_name  varchar(70)  NOT NULL,
     admin_contact_number  varchar(70),
     user_id varchar(255),
     PRIMARY KEY (admin_id),
@@ -47,16 +40,14 @@ CREATE TABLE admin(
 )
 
 CREATE TABLE category(
-    id int NOT NULL AUTO_INCREMENT,
-    category_id varchar(255) NOT NULL UNIQUE,
+    category_id varchar(255) NOT NULL ,
     category_name varchar(70)  NOT NULL,
     PRIMARY KEY (category_id)
     
 )
 
 CREATE TABLE product(
-    id  int NOT NULL AUTO_INCREMENT,
-    product_id  varchar(255) NOT NULL UNIQUE,
+    product_id  varchar(255) NOT NULL ,
     product_name     varchar(70) NOT NULL,
     product_unit_price   DECIMAL(10,2) NOT NULL,
     product_description    varchar(70) NOT NULL,
@@ -71,8 +62,7 @@ CREATE TABLE product(
 )
 
 CREATE TABLE order(
-    id  int NOT NULL AUTO_INCREMENT,
-    order_id  varchar(255) NOT NULL UNIQUE,
+    order_id  varchar(255) NOT NULL ,
     order_date  date  NOT NULL,
     order_quantity  BIGINT NOT NULL,
     order_price     DECIMAL(10,2) NOT NULL,
@@ -87,8 +77,7 @@ CREATE TABLE order(
 )
 
 CREATE TABLE upload(
-    id int NOT NULL AUTO_INCREMENT,
-    upload_id  varchar(255) NOT NULL UNIQUE,
+    upload_id  varchar(255) NOT NULL ,
     upload_date    date NOT NULL,
     upload_product_quanity  BIGINT NOT NULL,
     product_id  varchar(255),
@@ -99,8 +88,7 @@ CREATE TABLE upload(
 )
 
 CREATE TABLE sales_report (
-    id int NOT NULL AUTO_INCREMENT,
-    sales_report_id varchar(255) NOT NULL UNIQUE,
+    sales_report_id varchar(255) NOT NULL ,
     quantity_sold BIGINT NOT NULL,
     quantity_left  BIGINT NOT NULL,
     sold_date   date NOT NULL,
