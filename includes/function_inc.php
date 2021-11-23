@@ -4,22 +4,83 @@
 function signupUser($conn, $userEmail, $userPassword, $userRole)
 {
 
-    $hashedPwd = password_hash($userPassword, PASSWORD_DEFAULT);
+    $sql = "SELECT user_id 
+            FROM users
+            WHERE user_email = '$userEmail'";
 
-    $sqlSignup = "INSERT INTO users (user_email,user_password,user_role)
-                  VALUES ('$userEmail', '$hashedPwd','$userRole')";
+    $res = mysqli_query($conn, $sql);
 
-    $res = mysqli_query($conn, $sqlSignup);
+    $rowcount = mysqli_num_rows($res);
 
-    if ($res) {
-        return true;
+    if ($rowcount  > 0) {
+
+        echo "<script>
+                  alert('use another email');
+                  window.location.href='/online_shopping_system/signup.php';
+                  </script>";
     } else {
 
-        return false;
+        $hashedPwd = password_hash($userPassword, PASSWORD_DEFAULT);
+
+        $id =  generateId($conn, 'users');
+        $userId =  'U#00' . $id;
+
+
+
+        $sql = "INSERT INTO users (user_id,user_email,user_password,user_role)
+                  VALUES ('$userId','$userEmail', '$hashedPwd','$userRole')";
+
+        $res = mysqli_query($conn, $sql);
+
+        if ($res) {
+
+            //  echo "User Created";
+            return  $userId;
+        } else {
+
+            echo "Error User";
+            return false;
+        }
     }
 }
 
 
+function generateId($conn, $tableName)
+{
+
+    if ($tableName == 'users') {
+        $id = "user_id";
+    } else {
+        $id = $tableName . "_id";
+    }
+
+    $sql = "SELECT $id
+            FROM $tableName";
+
+    $res = mysqli_query($conn, $sql);
+    $ids = array();
+    if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+
+            array_push($ids, $row[$id]);
+        }
+    }
+
+
+    if (empty($ids)) {
+        $mainId =  '1';
+    } else {
+        $lastId =  $ids[sizeof($ids) - 1];
+        $lastId = explode('#', $lastId);
+        $lastId = (int) $lastId[1];
+        $mainId = $lastId + 1;
+    }
+
+    return  $mainId;
+}
+
+
+//! FUcntion Not in use
 function getUserId($conn, $userEmail)
 {
     $sqlRead = "SELECT user_id
@@ -29,82 +90,57 @@ function getUserId($conn, $userEmail)
     $res = mysqli_query($conn, $sqlRead);
 
     $userId = '';
-    if ($res->num_rows > 0) {
 
-        while ($row = $res->fetch_assoc()) {
-
-            $userId = $row['user_id'];
-        }
-    }
 
     return $userId;
 }
 
 
-function signupSeller($conn, $sellerName, $sellerEmail, $userId)
+function signupSeller($conn, $sellerName, $userId)
 {
 
 
-    $sql = "select * from seller where seller_email = '$sellerEmail'";
+    $id = generateId($conn, 'seller');
 
+    $sellerId = 'S#00' . $id;
 
-    $res = mysqli_query($conn, $sql);
+    $sqlSignup = "INSERT INTO seller (seller_id,seller_name,seller_contact_number,seller_address,user_id)
+                  VALUES ('$sellerId','$sellerName',null,null,'$userId')";
 
-    if ($res->num_rows > 0) {
+    $res = mysqli_query($conn, $sqlSignup);
 
+    if ($res) {
         echo "<script>
-                  alert('use another email');
-                  window.location.href='/online_shopping_system/signup.php';
-                  </script>";
-    } else {
-
-        $sqlSignup = "INSERT INTO seller (seller_name,seller_email,seller_contact_number,seller_address,user_id)
-        VALUES ( '$sellerName', '$sellerEmail',null,null,'$userId')";
-
-        $res = mysqli_query($conn, $sqlSignup);
-
-        if ($res) {
-            echo "<script>
             alert('Signup successfully');
             window.location.href='/online_shopping_system/login.php';
             </script>";
-        }
+    } else {
+
+        echo "Signup Error";
     }
 }
 
 
-function signUpCustomer($conn, $customerName, $userEmail, $userId)
+function signupCustomer($conn, $customerName, $userId)
 {
 
+    $id = generateId($conn, 'customer');
 
-    $sql = "select * from customer where customer_email = '$userEmail'";
+    $customerId = 'C#00' . $id;
 
+    $sqlSignup = "INSERT INTO customer (customer_id,customer_name,customer_contact_number,customer_address,user_id)
+                        VALUES ('$customerId','$customerName',null,null,'$userId')";
 
-    $res = mysqli_query($conn, $sql);
+    $res = mysqli_query($conn, $sqlSignup);
 
-    if ($res->num_rows > 0) {
-
+    if ($res) {
         echo "<script>
-                  alert('use another email');
-                  window.location.href='/online_shopping_system/signup.php';
-                  </script>";
-    } else {
-
-        //customer_name 	customer_email 	customer_contact_number 	customer_adderess 	user_id
-        $sqlSignup = "INSERT INTO customer (customer_name,customer_email,customer_contact_number,customer_adderess,user_id)
-                        VALUES ('$customerName', '$userEmail',null,null,'$userId')";
-
-        $res = mysqli_query($conn, $sqlSignup);
-
-        if ($res) {
-            echo "<script>
             alert('Signup successfully');
             window.location.href='/online_shopping_system/login.php';
             </script>";
-        } else {
+    } else {
 
-            echo "not ok";
-        }
+        echo "Customer Signup Error";
     }
 }
 
@@ -306,31 +342,54 @@ function compressImage($uploadImage, $imgType)
 
 function getCustomerInfo($conn, $userId)
 {
-    $sql = "SELECT customer_id, customer_name, customer_email, customer_contact_number,customer_adderess
-    FROM customer 
-    WHERE user_id=$userId";
+
+    $sql = "SELECT customer_id, customer_name, customer_contact_number,customer_address
+            FROM customer 
+            WHERE user_id='$userId'";
+
     $res = mysqli_query($conn, $sql);
     $customerInformation = '';
     if ($res->num_rows > 0) {
 
         while ($row = $res->fetch_assoc()) {
 
-            $customerInformation = array('customer_id' => $row['customer_id'], 'customer_name' => $row['customer_name'], 'customer_email' => $row['customer_email'], 'customer_contact_number' => $row['customer_contact_number'], 'customer_adderess' => $row['customer_adderess']);
+            $customerInformation = array('customer_id' => $row['customer_id'], 'customer_name' => $row['customer_name'], 'customer_contact_number' => $row['customer_contact_number'], 'customer_address' => $row['customer_address'], 'customer_email' => '');
         }
     }
+
+
+    $sql = "SELECT user_email
+            FROM users 
+            WHERE user_id='$userId'";
+
+    $res = mysqli_query($conn, $sql);
+    if ($res->num_rows > 0) {
+
+        while ($row = $res->fetch_assoc()) {
+
+            $customerInformation['customer_email'] = $row['user_email'];
+        }
+    }
+
 
     return $customerInformation;
 }
 
-function customerInfoUpdate($conn, $customerId, $customerName, $customerEmail, $customerContactNumber, $customerAddress)
-{
+function customerInfoUpdate($conn, $customerId, $userId, $customerName, $customerEmail, $customerContactNumber, $customerAddress)
+{;
     $sql = "UPDATE customer
-    SET customer_name = '$customerName', customer_email= '$customerEmail', customer_contact_number= '$customerContactNumber', customer_adderess= '$customerAddress'
+    SET customer_name = '$customerName', customer_contact_number= '$customerContactNumber', customer_address= '$customerAddress'
     WHERE customer_id = '$customerId'";
 
-    $res = mysqli_query($conn, $sql);
+    $res1 = mysqli_query($conn, $sql);
 
-    if ($res) {
+    $sql = "UPDATE users
+            SET user_email = '$customerEmail'
+            WHERE user_id  = '$userId'";
+
+    $res2 = mysqli_query($conn, $sql);
+    // exit();
+    if ($res1 && $res2) {
         echo "<script>
                   alert('Update Succesful');
                   window.location.href='/online_shopping_system/customer/customer_dashboard.php';

@@ -1,7 +1,7 @@
 seller:
 
-abul@gmail.com   abul@123
-kabul@gmail.com  kabul@124
+hasan@gmail.com   hasan@123
+kabir@gmail.com  kabir@124
 harun@gmail.com  harun@125
 sara@gmail.com   sara@126
 hasib@gmail.com  hasib@127
@@ -11,8 +11,8 @@ admin@gmail.com  admin@001
 customer:
 
 hanif@gmail.com hanif@123
-abir@gmail.com abir@124
-dibbo@gmail.co  dibbo@125
+abir@gmail.com abir@123
+dibbo@gmail.co  dibbo@123
 
 
 

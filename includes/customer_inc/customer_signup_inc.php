@@ -6,18 +6,16 @@ if (isset($_POST['customer_signup'])) {
     include_once '../function_inc.php';
 
     $customerName = $_POST['customer_name'];
-    $userEmail = $_POST['user_email'];
-    $userPassword = $_POST['user_password'];
-    $userRole = 'customer';
+    $customerEmail = $_POST['user_email'];
+    $customerPassword = $_POST['user_password'];
+    $role = 'customer';
 
 
-    $signedUp = signupUser($conn, $userEmail, $userPassword, $userRole);
+    $userId = signupUser($conn, $customerEmail, $customerPassword, $role);
 
-    if ($signedUp) {
-
-        $userId = getUserId($conn, $userEmail);
+    if ($userId != false) {
 
 
-        signUpCustomer($conn, $customerName, $userEmail, $userId);
+        signupCustomer($conn, $customerName, $userId);
     }
 }

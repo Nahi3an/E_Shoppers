@@ -8,4 +8,4 @@ if (isset($_POST['logout_btn'])) {
     echo $_SESSION['user_id'];
 }
 
-header('location:/online_shopping_system/login.php');
+header('location:/online_shopping_system/main.php');

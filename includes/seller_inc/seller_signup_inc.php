@@ -11,11 +11,13 @@ if (isset($_POST['seller_signup'])) {
     $sellerPasswordRepeat = $_POST['seller_password_confirm'];
     $role = 'seller';
 
-    $signedUp = signupUser($conn, $sellerEmail, $sellerPassword, $role);
+    $userId = signupUser($conn, $sellerEmail, $sellerPassword, $role);
 
-    if ($signedUp) {
-        $userId = getUserId($conn, $sellerEmail);
+    if ($userId != false) {
 
-        signupSeller($conn, $sellerName, $sellerEmail, $userId);
+        $userId;
+        //$userId = getUserId($conn, $sellerEmail);
+
+        signupSeller($conn, $sellerName, $userId);
     }
 }

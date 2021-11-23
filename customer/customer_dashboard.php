@@ -4,6 +4,7 @@ include_once '../includes/dbh_inc.php';
 include_once '../includes/function_inc.php';
 $customerInformation = getCustomerInfo($conn, $_SESSION['user_id']);
 
+
 ?>
 
 <div class="customer-dashboard container">
@@ -21,40 +22,32 @@ $customerInformation = getCustomerInfo($conn, $_SESSION['user_id']);
         </div>
         <div class="mb-3">
             <label class="form-label">Customer Contact Number</label> <br>
-            <input type="text" name="customer_contact_number" value="<?php echo $customerInformation['customer_contact_number']; ?>">
+            <?php
+            if ($customerInformation['customer_contact_number'] == '') {
+            ?>
+                <input type="text" name="customer_contact_number" placeholder="Please Set Contact Number">
+            <?php } else {
+            ?>
+                <input type="text" name="customer_contact_number" value="<?php echo $customerInformation['customer_contact_number']; ?>">
+            <?php
+            }
+            ?>
         </div>
         <div class="mb-3">
             <label class="form-label">Customer Address</label> <br>
-            <input type="text" name="customer_address" value="<?php echo $customerInformation['customer_adderess']; ?>">
+            <?php
+            if ($customerInformation['customer_address'] == '') {
+            ?>
+                <input type="text" name="customer_address" placeholder="Please Set Address">
+            <?php } else {
+            ?>
+                <input type="text" name="customer_address" value="<?php echo $customerInformation['customer_address'] ?>">
+            <?php }
+            ?>
+
         </div>
         <button type="submit" class="btn btn-primary" name="customer_update">Submit</button>
     </form>
-    <!--<div class="container">
-            <div class="card-group">
-                <div class="card">
-                    <div class="card-body">
-                    <h5 class="card-title">Orders</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-body">
-                    <a href="/online_shopping_system/customer/customer_profile_edit.php"><h5 class="card-title">Edit Profile</h5></a>
-                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    </div>
-                </div>
-                    <div class="card">
-                    <div class="card-body">
-                    <h5 class="card-title">Change Password</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-                </div>
-            </div>
-        </div>-->
 </div>
 
 
