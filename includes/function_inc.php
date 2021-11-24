@@ -464,3 +464,124 @@ function  addCategory($conn, $categoryName)
         echo "Error!";
     }
 }
+
+
+function getCustomerByAdmin($conn)
+{
+
+    $sql = "SELECT id,customer_id, customer_name, customer_contact_number, customer_address,user_id	
+            FROM customer 
+            ORDER BY id ASC";
+    $result = mysqli_query($conn, $sql);
+
+    $customerInfo = array();
+    if ($result->num_rows > 0) {
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $customer = array('customer_id' => $row['customer_id'], 'customer_name' => $row['customer_name'], 'customer_contact_number' => $row['customer_contact_number'], 'customer_address' => $row['customer_address'], 'user_id' => $row['user_id'], 'customer_email' => "");
+            array_push($customerInfo, $customer);
+        }
+    }
+
+    $sql = "SELECT id, user_id,user_email
+            FROM users 
+            WHERE user_role='customer'
+            ORDER BY id ASC";
+    $res = mysqli_query($conn, $sql);
+
+    $i = 0;
+    if ($res->num_rows > 0) {
+        while ($row = mysqli_fetch_assoc($res)) {
+
+            $customerInfo[$i]['customer_email'] = $row['user_email'];
+            $i++;
+        }
+    }
+
+
+    //exit();
+
+
+    return $customerInfo;
+}
+
+// function getAllUserInfo($conn, $userRole)
+// {
+//     $sql = "SELECT id, user_id,user_email
+//             FROM users 
+//             WHERE user_role='$userRole'
+//             ORDER BY id ASC";
+//     $res = mysqli_query($conn, $sql);
+
+//     $userInfo = array();
+
+//     if ($res->num_rows > 0) {
+//         while ($row = mysqli_fetch_assoc($res)) {
+
+//             $user = array('user_id' => $row['user_id'], 'user_email' => $row['user_email']);
+//             array_push($userInfo, $user);
+//         }
+//     }
+
+//     return  $userInfo;
+// }
+
+function  getSellerByAdmin($conn)
+{
+
+    $sql = "SELECT id,seller_id, seller_name, seller_contact_number, seller_address,user_id	
+    FROM seller 
+    ORDER BY id ASC";
+    $result = mysqli_query($conn, $sql);
+
+    $sellerInfo = array();
+    if ($result->num_rows > 0) {
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $seller = array('seller_id' => $row['seller_id'], 'seller_name' => $row['seller_name'], 'seller_contact_number' => $row['seller_contact_number'], 'seller_address' => $row['seller_address'], 'user_id' => $row['user_id'], 'seller_email' => "");
+            array_push($sellerInfo, $seller);
+        }
+    }
+
+    $sql = "SELECT id, user_id,user_email
+    FROM users 
+    WHERE user_role='seller'
+    ORDER BY id ASC";
+    $res = mysqli_query($conn, $sql);
+
+    $i = 0;
+    if ($res->num_rows > 0) {
+        while ($row = mysqli_fetch_assoc($res)) {
+
+            $sellerInfo[$i]['seller_email'] = $row['user_email'];
+            $i++;
+        }
+    }
+
+
+    //exit();
+
+    return $sellerInfo;
+}
+
+function getProductByAdmin($conn)
+{
+
+    //
+    // Full texts
+    // id 	product_id 	product_name 	product_unit_price 	product_description 	product_quanity 	upload_date 	product_image_1 	product_image_2 	category_id 	seller_id 
+    $sql = "SELECT product_id, product_name, product_unit_price, product_description, product_quanity,upload_date, product_image_1,	product_image_2,category_id, seller_id	
+            FROM product";
+    $result = mysqli_query($conn, $sql);
+
+    $productInfo = array();
+    if ($result->num_rows > 0) {
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $product = array('product_id' => $row['product_id'], 'product_name' => $row['product_name'], 'product_unit_price' => $row['product_unit_price'], 'product_description' => $row['product_description'], 'product_quanity' => $row['product_quanity'], 'upload_date' => $row['upload_date'], 'product_image_1' => $row['product_image_1'], 'product_image_2' => $row['product_image_2'], 'category_id' => $row['category_id'], 'seller_id' => $row['seller_id']);
+
+            array_push($productInfo, $product);
+        }
+    }
+    return $productInfo;
+}

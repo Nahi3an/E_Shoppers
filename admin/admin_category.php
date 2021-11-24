@@ -26,6 +26,16 @@ include_once './admin_header.php';
     </form>
 
 </div>
+
+<?php
+
+include_once '../includes/dbh_inc.php';
+include_once '../includes/function_inc.php';
+
+//getAllCategory($conn);
+
+
+?>
 <div class="admin-category container">
     <br>
     <h4>

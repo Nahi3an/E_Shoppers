@@ -19,16 +19,16 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Products</a>
+                        <a class="nav-link" href="/online_shopping_system/admin/admin_product.php">Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/online_shopping_system/admin/admin_category.php">Category</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sellers</a>
+                        <a class="nav-link" href="/online_shopping_system/admin/admin_seller.php">Sellers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Customers</a>
+                        <a class="nav-link" href="/online_shopping_system/admin/admin_customer.php">Customers</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Transactions</a>
