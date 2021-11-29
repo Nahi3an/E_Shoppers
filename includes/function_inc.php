@@ -167,7 +167,6 @@ function loginUser($conn, $userEmail, $userPassword)
 
         $_SESSION["user_id"] = $userInfo['user_id'];
         $_SESSION['user_role'] =  $userInfo['user_role'];
-
         if ($userInfo['user_role'] === 'admin') {
 
 
@@ -505,26 +504,7 @@ function getCustomerByAdmin($conn)
     return $customerInfo;
 }
 
-// function getAllUserInfo($conn, $userRole)
-// {
-//     $sql = "SELECT id, user_id,user_email
-//             FROM users 
-//             WHERE user_role='$userRole'
-//             ORDER BY id ASC";
-//     $res = mysqli_query($conn, $sql);
 
-//     $userInfo = array();
-
-//     if ($res->num_rows > 0) {
-//         while ($row = mysqli_fetch_assoc($res)) {
-
-//             $user = array('user_id' => $row['user_id'], 'user_email' => $row['user_email']);
-//             array_push($userInfo, $user);
-//         }
-//     }
-
-//     return  $userInfo;
-// }
 
 function  getSellerByAdmin($conn)
 {
@@ -566,10 +546,6 @@ function  getSellerByAdmin($conn)
 
 function getProductByAdmin($conn)
 {
-
-    //
-    // Full texts
-    // id 	product_id 	product_name 	product_unit_price 	product_description 	product_quanity 	upload_date 	product_image_1 	product_image_2 	category_id 	seller_id 
     $sql = "SELECT product_id, product_name, product_unit_price, product_description, product_quanity,upload_date, product_image_1,	product_image_2,category_id, seller_id	
             FROM product";
     $result = mysqli_query($conn, $sql);

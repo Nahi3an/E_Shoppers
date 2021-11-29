@@ -6,8 +6,8 @@ include_once './includes/function_inc.php';
 $productInfo = getProductByAdmin($conn);
 ?>
 
-<div class="product-card container mb-5" id="product-card">
-    <div class="row row-cols-1 row-cols-md-4 g-4">
+<div class="product-card container mb-5 mt-5" id="product-card">
+    <div class="row row-cols-1 row-cols-md-4 g-4 mt-5">
         <?php foreach ($productInfo as $product) { ?>
             <div class="col">
                 <div class="card h-100">
@@ -16,19 +16,28 @@ $productInfo = getProductByAdmin($conn);
                         <h5 class="card-title"><?php echo  $product['product_name'] ?></h5>
                         <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore necessitatibus doloribus harum, illo accusantium perferendis. Quis doloribus dolores iusto aspernatur perspiciatis repudiandae, ipsam fugit placeat non ut tenetur accusantium adipisci.</p>
                     </div>
-                    <button class="btn btn-info">Add To Cart</button>
-                    <button class="btn btn-danger">Buy Now</button>
-
+                    <div class="row align-center">
+                        <div class="col-md-6">
+                            <form action="/online_shopping_system/cart.php" method="POST">
+                                <input type="hidden" class="Id" name="product_id" value="<?php echo $product['product_id'] ?>">
+                                <input type="hidden" name="product_name" value="<?php echo $product['product_name'] ?>">
+                                <input type="hidden" class="mrp" name="product_unit_price" value="<?php echo $product['product_unit_price'] ?>">
+                                <input type="submit" class="btn btn-primary" name="add_to_cart" value="Add to cart">
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <a class="btn btn-danger">Buy Now</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
+
         <?php } ?>
-
-
 
     </div>
 </div>
-
-
 
 
 <?php

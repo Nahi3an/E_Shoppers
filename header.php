@@ -21,7 +21,7 @@ session_start();
 <body class="">
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary border">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="/online_shopping_system/main.php">Online Shopping System</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,46 +88,69 @@ session_start();
                     }
 
                     ?>
-                </ul>
+                    <!-- <script>
+                        document.body.addEventListener("click", function(e) {
 
+                            let itemNum = document.getElementById("cart-item-number").innerHTML;
+
+                            if (e.target.classList.contains("add-to-cart")) {
+                                if (itemNum == "") {
+                                    document.getElementById("cart-item-number").innerHTML = 1;
+                                } else {
+
+                                    let num = parseInt(itemNum);
+                                    num = num + 1;
+                                    document.getElementById("cart-item-number").innerHTML = num;
+                                }
+                            }
+
+                            console.log(e.target.id);
+
+                        });
+                    </script> -->
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/online_shopping_system/show_cart.php" id="cart-item">Cart<span id="cart-item-number"></span></a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <div class="main border" style='position: relative; height:500px;'>
+    <div class="main border mb-5" style="position: relative; height:200px;">
 
-        <div class="mb-5" id="banner" style="height: 200px; background-color:blue; border:2px solid black; position: absolute; width: 100%; height: 50%;">
+        <div id="banner" style="height: 250px; position: absolute; width: 100%;">
 
-            <!-- <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="/online_shopping_system/img/online_shopping_1.jpg" class="d-block w-100" alt="..." height="500">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="./img/y2020-03-11-03_generated.jpg" class="d-block w-100" alt="..." height="230">
+                        <!-- <a href="https://www.vecteezy.com/free-vector/ecommerce-banner">Ecommerce Banner Vectors by Vecteezy</a> -->
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./img/Black_Friday_Concept01.jpg" class="d-block w-100" alt="..." height="230">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./img/vecteezy_online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-vector-illustration-search_.jpg" class="d-block w-100" alt="..." height="230">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-            <div class="carousel-item">
-                <img src="/online_shopping_system/img/online_shopping_2.jpg" class="d-block w-100" alt="..." height="500">
-            </div>
-            <div class="carousel-item">
-                <img src="/online_shopping_system/img/online_shopping_3.jpg" class="d-block w-100" alt="..." height="500">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div> -->
         </div>
 
         <div class="w-50" id="search-result" style="position: absolute;  z-index: 1; margin-left:245px">
-            <ul class="list-group" style="border:1px solid black;" id="list-data">
+            <ul class="list-group" id="list-data">
 
             </ul>
             <script type="text/javascript">
@@ -154,13 +177,13 @@ session_start();
                             $("#list-data").css('display', 'none');
 
                         }
-
-
-
-
                     });
                 })
             </script>
+
+
+
+
 
         </div>
 
