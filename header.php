@@ -18,10 +18,16 @@ session_start();
     <title>Online Shopping System</title>
 </head>
 
+<style>
+    body {
+        font-size: 14px;
+    }
+</style>
+
 <body class="">
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
         <div class="container-fluid">
             <a class="navbar-brand" href="/online_shopping_system/main.php">Online Shopping System</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -128,14 +134,13 @@ session_start();
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="./img/y2020-03-11-03_generated.jpg" class="d-block w-100" alt="..." height="230">
-                        <!-- <a href="https://www.vecteezy.com/free-vector/ecommerce-banner">Ecommerce Banner Vectors by Vecteezy</a> -->
+                        <img src="/online_shopping_system/img/y2020-03-11-03_generated.jpg" class="d-block w-100" alt="..." height="230">
                     </div>
                     <div class="carousel-item">
-                        <img src="./img/Black_Friday_Concept01.jpg" class="d-block w-100" alt="..." height="230">
+                        <img src="/online_shopping_system/img/Black_Friday_Concept01.jpg" class="d-block w-100" alt="..." height="230">
                     </div>
                     <div class="carousel-item">
-                        <img src="./img/vecteezy_online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-vector-illustration-search_.jpg" class="d-block w-100" alt="..." height="230">
+                        <img src="/online_shopping_system/img/vecteezy_online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-vector-illustration-search_.jpg" class="d-block w-100" alt="..." height="230">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -162,7 +167,7 @@ session_start();
                         if (search != "") {
                             $("#list-data").css('display', 'block');
                             $.ajax({
-                                url: 'search.php',
+                                url: '/online_shopping_system/search.php',
                                 method: 'post',
                                 data: {
                                     query: search

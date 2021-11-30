@@ -561,3 +561,21 @@ function getProductByAdmin($conn)
     }
     return $productInfo;
 }
+
+
+function getProductInfo($conn, $productId)
+{
+    $sql = "SELECT product_id, product_name, product_unit_price, product_description, product_quanity,upload_date, product_image_1,	product_image_2,category_id, seller_id	
+            FROM product
+            WHERE product_id = '$productId'";
+    $result = mysqli_query($conn, $sql);
+
+    $productInfo = "";
+    if ($result->num_rows > 0) {
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $productInfo = array('product_id' => $row['product_id'], 'product_name' => $row['product_name'], 'product_unit_price' => $row['product_unit_price'], 'product_description' => $row['product_description'], 'product_quanity' => $row['product_quanity'], 'upload_date' => $row['upload_date'], 'product_image_1' => $row['product_image_1'], 'product_image_2' => $row['product_image_2'], 'category_id' => $row['category_id'], 'seller_id' => $row['seller_id']);
+        }
+    }
+    return $productInfo;
+}

@@ -6,7 +6,7 @@ $output = '';
 if (isset($_POST['query'])) {
 
     $search = $_POST['query'];
-    $stmt = $conn->prepare("SELECT product_name FROM product 
+    $stmt = $conn->prepare("SELECT product_id, product_name FROM product 
                             WHERE product_name LIKE CONCAT('%',?,'%')");
 
     $stmt->bind_param("s", $search);
@@ -17,11 +17,23 @@ if (isset($_POST['query'])) {
     if ($res->num_rows > 0) {
 
         $output = "";
-
         while ($row = $res->fetch_assoc()) {
 
             $output .= "   
-            <li class='list-group-item'>" . $row['product_name'] . "</li>";
+            ";
+?>
+
+            <li class='list-group-item'>
+                <form action="/online_shopping_system/product/single_product.php" method="POST">
+                    <span><?php echo $row['product_name']; ?></span>
+                    <input type="text" name="product_id" hidden value="<?php echo $row['product_id']; ?>">
+                    <button type="submit" class="btn btn-primary btn-sm" name='go_to_product'><small>more..</small></button>
+                </form>
+
+            </li>
+
+<?php
+            "</li>";
         }
         echo $output;
     } else {
@@ -29,3 +41,5 @@ if (isset($_POST['query'])) {
         echo "<li class='list-group-item'>No Reult Found</li>";
     }
 }
+
+?>

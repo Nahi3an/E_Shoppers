@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") //to access only form's submit method=
             // echo $_POST['product_id'];
             $_SESSION['show_cart'][0] = array('product_id' => $_POST['product_id'], 'product_name' => $_POST['product_name'], 'product_unit_price' => $_POST['product_unit_price'], 'product_quantity' => 1); //to show cart item at 0 index
 
-            echo "item added <br>";
+
             echo "<script>
             alert('item added');
             window.location.href='main.php';
