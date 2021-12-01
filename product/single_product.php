@@ -1,15 +1,14 @@
 <?php
 include_once '../header.php';
 
-if (isset($_POST['go_to_product'])) {
+// echo $_POST['id'];
+// exit();
+if (isset($_POST['go_to_product']) || isset($_POST['display-product'])) {
 
     include_once '../includes/dbh_inc.php';
     include_once '../includes/function_inc.php';
 
     $productInfo = getProductInfo($conn, $_POST['product_id']);
-
-
-
 
 ?>
 

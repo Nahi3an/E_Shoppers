@@ -3,50 +3,59 @@ include_once './seller_header.php';
 include_once '../includes/dbh_inc.php';
 include_once '../includes/function_inc.php';
 
+session_start();
 
-// getProductOfSeller($conn);
+$sellerInfo = getSellerInfo($conn, $_SESSION['user_id']);
 
-// 
+$productInfo = getProductBySeller($conn, $sellerInfo['seller_id']);
+
 
 
 ?>
 
 <div class="seller-all-product container">
+  <br> <br>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">product_id </th>
+        <th scope="col">product_name </th>
+        <th scope="col">product_unit_price </th>
+        <th scope="col">product_description </th>
+        <th scope="col">product_quanity </th>
+        <th scope="col">upload_date </th>
+        <th scope="col">product_image_1 </th>
+        <th scope="col">category_id </th>
+        <th scope="col">Action </th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($productInfo as $product) { ?>
+        <tr>
+          <td><?php echo $product['product_id'] ?></td>
+          <td><?php echo $product['product_name'] ?></td>
+          <td><?php echo $product['product_unit_price'] ?></td>
+          <td><?php echo $product['product_description'] ?></td>
+          <td><?php echo $product['product_quanity'] ?></td>
+          <td><?php echo $product['upload_date'] ?></td>
+          <td><img src="/online_shopping_system/img/product_img/<?= $product['product_image_1'] ?>" width="100" height="100"></td>
+          <td><?php echo $product['category_id'] ?></td>
+          <td>
+            <form action="/online_shopping_system/seller/seller_update_product.php" method="POST">
+              <input type="text" hidden name="product_id" value="<?php echo $product['product_id'] ?>">
+              <input type="text" hidden name="product_name" value="<?php echo $product['product_name'] ?>">
+              <input type="text" hidden name="product_unit_price" value="<?php echo $product['product_unit_price'] ?>">
+              <input type="text" hidden name="product_description" value="<?php echo $product['product_description'] ?>">
+              <input type="text" hidden name="product_quanity" value="<?php echo $product['product_quanity'] ?>">
+              <input type="submit" name="update_product" class="btn btn-primary btn-sm" value="Update">
 
-    <table class="table align-middle">
-        <thead>
-            <tr>
-                <th scope="col">Product Name</th>
-                <th scope="col">Product Category</th>
-                <th scope="col">Unit Price</th>
-                <th scope="col">Upload Date</th>
-                <th scope="col">Update</th>
-                <th scope="col">Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <?php
-                // foreach ($allProductInfo as $product) {
+            </form>
+          </td>
+        </tr>
+      <?php } ?>
 
-                //     echo "<tr>";
-
-                //     echo  "<td>" . $product['product_id'] . "</td>";
-                //     echo  "<td>" . $product['product_name'] . "</td>";
-                //     echo  "<td>" . $product['unit_price'] . "</td>";
-                //     echo  "<td>" . $product['supplier_name'] . "</td>";
-                //     echo  "<td>" . $product['supplier_contact_number'] . "</td>";
-                //     echo  "<td>" . $product['supplier_address'] . "</td>";
-                //     echo  '<td><a class="btn  btn-sm btn-info" href="/ERP_System/products/update_product.php?main_product_id=' . $product['id'] . '&update_product_id=' . $product['product_id'] . '&update_product_name=' . $product['product_name'] . '&update_product_price=' . $product['unit_price'] . '">Update</a></td>';
-                //     echo  '<td><a class="btn  btn-sm btn-danger" href="/ERP_System/includes/products_inc/delete_product_inc.php?delete_product_id=' . $product['product_id'] . '">Delete</a></td>';
-                //     echo "</tr>";
-                //     echo "</tr>";
-                // }
-
-                ?>
-
-        </tbody>
-    </table>
+    </tbody>
+  </table>
 
 </div>
 

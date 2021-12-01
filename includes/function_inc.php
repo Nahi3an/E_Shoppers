@@ -291,21 +291,34 @@ function addSellerProduct($conn, $productName, $productUnitPrice, $productDescri
 
     $productId = 'PROD#00' . $id;
 
-    $sql = "INSERT INTO 
-            product(product_id,product_name,product_unit_price,product_description,product_quanity,
-                    upload_date,product_image_1,product_image_2,category_id,seller_id)
-            VALUES ('$productId','$productName','$productUnitPrice','$productDescription','$productQuantity',  
-                    '$uploadDate','$imgId1','$imgId2','$categoryId', '$sellerId')";
 
+    $s = "select * from product where product_name = '$productName'";
+    $result = mysqli_query($conn, $s);
+    $num = mysqli_num_rows($result);
 
-    $res = mysqli_query($conn, $sql);
-
-    if ($res) {
-
-        header('location:/online_shopping_system/seller/seller_add_product.php');
+    if ($num == 1) {
+        echo "<script>
+                   alert('Product With Same Name Exists');
+                   window.location.href='/online_shopping_system/seller/seller_add_product.php';
+                </script>";
     } else {
 
-        echo "Error!";
+        $sql = "INSERT INTO 
+        product(product_id,product_name,product_unit_price,product_description,product_quanity,
+                upload_date,product_image_1,product_image_2,category_id,seller_id)
+        VALUES ('$productId','$productName','$productUnitPrice','$productDescription','$productQuantity',  
+                '$uploadDate','$imgId1','$imgId2','$categoryId', '$sellerId')";
+
+
+        $res = mysqli_query($conn, $sql);
+
+        if ($res) {
+
+            header('location:/online_shopping_system/seller/seller_add_product.php');
+        } else {
+
+            echo "Error!";
+        }
     }
 }
 
@@ -562,6 +575,26 @@ function getProductByAdmin($conn)
     return $productInfo;
 }
 
+function getProductBySeller($conn, $sellerId)
+{
+
+    $sql = "SELECT product_id, product_name, product_unit_price, product_description, product_quanity,upload_date, product_image_1,	product_image_2,category_id, seller_id	
+            FROM product
+            WHERE seller_id='$sellerId'";
+
+    $result = mysqli_query($conn, $sql);
+
+    $productInfo = array();
+    if ($result->num_rows > 0) {
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $product = array('product_id' => $row['product_id'], 'product_name' => $row['product_name'], 'product_unit_price' => $row['product_unit_price'], 'product_description' => $row['product_description'], 'product_quanity' => $row['product_quanity'], 'upload_date' => $row['upload_date'], 'product_image_1' => $row['product_image_1'], 'category_id' => $row['category_id']);
+
+            array_push($productInfo, $product);
+        }
+    }
+    return $productInfo;
+}
 
 function getProductInfo($conn, $productId)
 {
@@ -578,4 +611,29 @@ function getProductInfo($conn, $productId)
         }
     }
     return $productInfo;
+}
+
+
+function  productInfoUpdate($conn, $productId, $productName,  $productUnitPrice, $productQuantity,  $productDesciption)
+{
+
+    $sql = "UPDATE product
+            SET product_name = '$productName',product_unit_price = '$productUnitPrice',product_quanity = '$productQuantity',product_description = '$productDesciption'
+            WHERE product_id = '$productId'";
+
+    $res = mysqli_query($conn, $sql);
+
+    if ($res) {
+
+        echo "<script>
+        alert('Product Information Update Succesful');
+        window.location.href='/online_shopping_system/seller/seller_product.php';
+        </script>";
+    } else {
+
+        echo "<script>
+        alert('Product Information Update Unsuccesful');
+        window.location.href='/online_shopping_system/seller/seller_product.php';
+        </script>";
+    }
 }
