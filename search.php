@@ -25,9 +25,8 @@ if (isset($_POST['query'])) {
 
             <li class='list-group-item'>
                 <form action="/online_shopping_system/product/single_product.php" method="POST">
-                    <span><?php echo $row['product_name']; ?></span>
                     <input type="text" name="product_id" hidden value="<?php echo $row['product_id']; ?>">
-                    <button type="submit" class="btn btn-primary btn-sm" name='go_to_product'><small>more..</small></button>
+                    <button type="submit" class="btn btn-primary btn-sm" name='go_to_product' style="background: white; border: none; color:black;"><?php echo $row['product_name']; ?></button>
                 </form>
 
             </li>

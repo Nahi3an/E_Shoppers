@@ -1,27 +1,5 @@
 <?php
 
-// if (isset($_POST['add_to_cart'])) {
-
-//     echo "<script>
-//     alert('item added');
-//     window.location.href='main.php';
-//   </script>";
-// }
-
-
-
-// include_once './header.php';
-
-// // unset($_SESSION['show_cart']);
-// // session_destroy();
-// // exit();
-
-// if (!isset($_SESSION['show_cart'])) {
-
-//     echo "Not set";
-// }
-
-// exit();
 session_start(); //to access session variable
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") //to access only form's submit method=post
@@ -80,17 +58,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") //to access only form's submit method=
             }
         }
     }
-    // if (isset($_POST['to_change_quantity'])) {
-    //     foreach ($_SESSION['show_cart'] as $key => $value) {
-    //         if ($value['product_name'] == $_POST['product_name']) {
-    //             $_SESSION['show_cart'][$key]['product_quantity'] = $_POST['to_change_quantity']; //to change quantity at desired index
+    if (isset($_POST['to_change_quantity'])) {
+        foreach ($_SESSION['show_cart'] as $key => $value) {
+            if ($value['product_name'] == $_POST['product_name']) {
+                $_SESSION['show_cart'][$key]['product_quantity'] = $_POST['to_change_quantity']; //to change quantity at desired index
 
-    //             echo "<script>
-    //                     window.location.href='show_cart.php';
-    //                 </script>";
-    //         }
-    //     }
-    // }
+                echo "<script>
+                        window.location.href='show_cart.php';
+                    </script>";
+            }
+        }
+    }
 }
 
 ?>

@@ -20,7 +20,7 @@ session_start();
 
 <style>
     body {
-        font-size: 14px;
+        font-size: 17px;
     }
 </style>
 
@@ -39,7 +39,6 @@ session_start();
                         <div style="width: 450px;" class="me-2">
                             <input class="form-control" id="search" type="text" placeholder="Search....">
                         </div>
-                        <input type="submit" value="Search" class="btn btn-info">
                     </form>
 
                     <li class="nav-item">
@@ -115,7 +114,13 @@ session_start();
                         });
                     </script> -->
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/online_shopping_system/show_cart.php" id="cart-item">Cart<span id="cart-item-number"></span></a>
+                        <a class="nav-link active" aria-current="page" href="/online_shopping_system/show_cart.php" id="cart-item">Cart <span id="cart-item-number" style="color: black; font-weight:bold; font-size:18px; border:1px solid black; padding:2px">
+                                <?php if (isset($_SESSION['show_cart'])) {
+                                    echo count($_SESSION['show_cart']);
+                                } else {
+                                    echo "";
+                                }
+                                ?></span></a>
                     </li>
                 </ul>
             </div>
