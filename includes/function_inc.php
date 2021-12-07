@@ -1,5 +1,6 @@
 <?php
 
+use function PHPSTORM_META\type;
 
 function signupUser($conn, $userEmail, $userPassword, $userRole)
 {
@@ -56,8 +57,6 @@ function generateId($conn, $tableName)
     $ids = array();
     if ($res->num_rows > 0) {
         while ($row = $res->fetch_assoc()) {
-
-            // echo $row['id'];
             array_push($ids, $row['id']);
         }
     }
@@ -291,7 +290,6 @@ function addSellerProduct($conn, $productName, $productUnitPrice, $productDescri
 
     $productId = 'PROD#00' . $id;
 
-
     $s = "select * from product where product_name = '$productName'";
     $result = mysqli_query($conn, $s);
     $num = mysqli_num_rows($result);
@@ -314,7 +312,7 @@ function addSellerProduct($conn, $productName, $productUnitPrice, $productDescri
 
         if ($res) {
 
-            header('location:/online_shopping_system/seller/seller_add_product.php');
+            return $productId;
         } else {
 
             echo "Error!";
@@ -636,4 +634,60 @@ function  productInfoUpdate($conn, $productId, $productName,  $productUnitPrice,
         window.location.href='/online_shopping_system/seller/seller_product.php';
         </script>";
     }
+}
+
+function getAllCategory($conn, $categoryId)
+{
+    session_start();
+    $categoryId = explode(" - ", $categoryId);
+    $categoryId =  $categoryId[0];
+    $sql = "SELECT * FROM category
+            WHERE category_id = '$categoryId'";
+
+
+    $result = mysqli_query($conn, $sql);
+
+    $desc = array();
+    if ($result->num_rows > 0) {
+
+        while ($row = mysqli_fetch_assoc($result)) {
+
+            for ($i = 1; $i <= 30; $i++) {
+
+                if ($row['att' . $i] != '') {
+
+                    $desc[$i] = $row['att' . $i];
+                }
+            }
+        }
+    }
+
+    echo  "size " . sizeof($desc);
+
+
+    // echo "<br>";
+    // for ($i = 1; $i <= sizeof($desc); $i++) {
+    //     echo $desc[$i] . '<br>';
+    // }
+
+
+    $sql = "SELECT * FROM category
+            WHERE category_id = '$categoryId'";
+
+
+    $result = mysqli_query($conn, $sql);
+    $categoryInfo = array();
+    if ($result->num_rows > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $categoryInfo = array('category_id' => $row['category_id'], 'category_name' => $row['category_name'], 'attributes' => '');
+        }
+    }
+
+    // echo  "size " . sizeof($categoryInfo);
+    $categoryInfo['attributes'] = $desc;
+
+    $_SESSION['category_info'] = $categoryInfo;
+    // echo gettype($categoryInfo['attributes']);
+    header('location:/online_shopping_system/seller/seller_add_product.php');
+    // return $categoryInfo;
 }

@@ -6,7 +6,8 @@ include_once '../includes/function_inc.php';
 $categories = allCategory($conn);
 
 session_start();
-// echo  $_SESSION["user_id"];
+
+
 
 ?>
 
@@ -38,13 +39,33 @@ session_start();
             <select name="category_id">
                 <?php
                 foreach ($categories as $category) {
-                    echo "Id: <option>" . $category['category_id'] . " - " . $category['category_name']  . "</option>";
-                }
 
                 ?>
+                <?php
+                    echo "<option id ='category'>" . $category['category_id'] . " - " . $category['category_name'] . " </option>";
+                }
+                ?>
+            </select>
+            <input type="submit" value="show category" class="btn btn-info btn-sm" name="show_attribute"><br>
 
-            </select> <br>
         </div>
+
+
+        <div class="mb-3">
+
+            <?php
+            if (isset($_SESSION['category_info'])) {
+
+                foreach ($_SESSION['category_info']['attributes'] as $key => $attribute) {
+            ?>
+                    <label for=""><?php echo $attribute ?></label> <br>
+                    <input type="text" name="<?php echo $key ?>"><br>
+
+            <?php }
+            } ?>
+
+        </div>
+
         <div class="mb-3">
             <input type="file" name="product_image_1" accept="image/png, image/jpg, image/jpeg" onchange='loadImage(event)' />
             <img width="400" height="400" class="img-thumbnail" alt="" id="product-image-1">

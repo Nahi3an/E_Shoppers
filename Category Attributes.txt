@@ -33,7 +33,7 @@ PSU
 Warranty
 
 
-Processor:
+1. Processor:
 Brand
 Model
 Base Frequency
@@ -49,7 +49,7 @@ Memory Type
 Manufacturing Warranty
 
 
-Graphics Card:
+2. Graphics Card:
 Type
 Size
 Resolution
@@ -69,7 +69,7 @@ Dimensions
 Manufacturing Warranty
 
 
-Headphone:
+3. Headphone:
 Dimensions
 Weight
 Colour
@@ -85,7 +85,7 @@ Microphone Size
 Pick-up Pattern
 
 
-Keyboard:
+4. Keyboard:
 Type
 Wired/Wireless
 Keys
@@ -95,7 +95,7 @@ Others
 Colour 
 Warranty
 
-Mouse: 
+5. Mouse: 
 Connector
 Dimension
 Others
@@ -104,7 +104,7 @@ Weight
 Warranty
 
 
-Camera:
+6. Camera:
 Type
 Pixels
 Aspect Ratio
@@ -131,7 +131,7 @@ Focal Length
 Maximum Aperture 
 Warranty
 
-Smart Watch: 
+7. Smart Watch: 
 Display 
 Battery 
 Connectivity 
