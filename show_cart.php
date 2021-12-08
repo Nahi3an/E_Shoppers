@@ -66,7 +66,7 @@
             if (isset($_SESSION['show_cart']) && count($_SESSION['show_cart']) > 0) {
             ?>
              <h4>Total MRP:<h4 id="Total"> </h4>
-                 <button class="btn btn-danger btn-sm">Procced To Pay</button>
+                 <a class="btn btn-danger btn-sm" href="/online_shopping_system/cart_form.php">Procced To Pay</a>
              <?php
             }
                 ?>

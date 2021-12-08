@@ -1,22 +1,16 @@
 <?php
 include_once '../header.php';
 
-// echo $_POST['id'];
-// exit();
-if (isset($_POST['go_to_product']) || isset($_POST['display-product'])) {
+
+if (isset($_POST['go_to_product']) || isset($_POST['display-product']) || isset($_POST['buy_now'])) {
 
     include_once '../includes/dbh_inc.php';
     include_once '../includes/function_inc.php';
 
     $productInfo = getProductInfo($conn, $_POST['product_id']);
 
-    // echo $productInfo['category_id'];
     $categoryInfo = getSingleCategory($conn, $productInfo['category_id']);
     $description = getSingleDescription($conn, $productInfo['product_id'], $productInfo['category_id']);
-    // echo sizeof($categoryInfo['attributes']);
-
-    // echo $productInfo['product_id'];
-
 
 ?>
 
@@ -39,7 +33,7 @@ if (isset($_POST['go_to_product']) || isset($_POST['display-product'])) {
                     <?php echo $productInfo['product_description'] ?>
                 </p>
                 <span>Price: <?php echo $productInfo['product_unit_price'] ?> BDT</span> <br>
-                <a class="btn btn-danger btn-sm mt-2">Buy Now</a>
+                <a class="btn btn-danger btn-sm mt-2">Order Now</a>
             </div>
         </div>
 

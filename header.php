@@ -114,7 +114,7 @@ session_start();
                         });
                     </script> -->
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/online_shopping_system/show_cart.php" id="cart-item">Cart <span id="cart-item-number" style="color: black; font-weight:bold; font-size:18px; border:1px solid black; padding:2px">
+                        <a class="nav-link active" aria-current="page" href="/online_shopping_system/show_cart.php" id="cart-item">Cart <span id="cart-item-number">
                                 <?php if (isset($_SESSION['show_cart'])) {
                                     echo count($_SESSION['show_cart']);
                                 } else {

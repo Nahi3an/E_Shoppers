@@ -4,7 +4,13 @@ session_start(); //to access session variable
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") //to access only form's submit method=post
 {
-
+    if (!isset($_SESSION['user_id'])) {
+        echo "<script>
+        alert('please login first');
+        window.location.href='login.php';
+        </script>";
+        exit();
+    }
     if (isset($_POST['add_to_cart'])) //to check add(Add to cart) button clicked or not, and product's details can be transfer by $_post 
     {
 

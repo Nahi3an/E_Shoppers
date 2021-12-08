@@ -49,6 +49,8 @@ function generateId($conn, $tableName)
 {
 
 
+
+
     $sql = "SELECT id
             FROM $tableName
             ORDER BY id ASC";
@@ -806,4 +808,36 @@ function getSingleDescription($conn, $productId, $categoryId)
     //echo sizeof($descInfo['attributeValues']) . 'fuck';
     // exit();
     return $descInfo;
+}
+
+function addToOrderTable($conn, $cartInfo, $paymentMethod, $customerId, $sellerIds)
+{
+
+    // echo sizeof($cartInfo);
+    $count = 0;
+    foreach ($cartInfo as $key => $info) {
+        $orderDate =  date("Y/m/d");
+        $id = generateId($conn, 'orders');
+        $orderId = "Order#00" . $id;
+        $orderQuantity = $info['product_quantity'];
+        $orderPrice = $info['product_quantity'] * $info['product_unit_price'];
+        $productId = $info['product_id'];
+        $sellerId = $sellerIds[$key];
+        $sql = "INSERT INTO orders(order_id,order_date,order_quantity,order_price,order_payment_method,product_id,customer_id,seller_id)
+        VALUES ('$orderId','$orderDate', '$orderQuantity','$orderPrice','$paymentMethod','$productId','$customerId','$sellerId')";
+
+        $result = mysqli_query($conn, $sql);
+        if ($result) {
+            $count++;
+        } else {
+
+            echo "Error";
+            exit();
+        }
+    }
+
+    if ($count == sizeof($cartInfo)) {
+
+        return true;
+    }
 }

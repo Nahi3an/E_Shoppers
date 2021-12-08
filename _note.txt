@@ -141,4 +141,4 @@ dibbo@gmail.co  dibbo@123
     11.Deepcool GH-01 A-RGB Graphics Card Holder
 
 
-
+order_date 	order_quantity 	order_price order_payment_method 	product_id 	customer_id 	seller_id 	
