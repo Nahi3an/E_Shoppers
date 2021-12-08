@@ -665,10 +665,88 @@ function getAllCategory($conn, $categoryId)
     echo  "size " . sizeof($desc);
 
 
-    // echo "<br>";
-    // for ($i = 1; $i <= sizeof($desc); $i++) {
-    //     echo $desc[$i] . '<br>';
-    // }
+    $sql = "SELECT * FROM category
+            WHERE category_id = '$categoryId'";
+
+
+    $result = mysqli_query($conn, $sql);
+    $categoryInfo = array();
+    if ($result->num_rows > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $categoryInfo = array('category_id' => $row['category_id'], 'category_name' => $row['category_name'], 'attributes' => '');
+        }
+    }
+
+
+    $categoryInfo['attributes'] = $desc;
+
+    $_SESSION['category_info'] = $categoryInfo;
+
+    header('location:/online_shopping_system/seller/seller_add_product.php');
+}
+
+
+function  addToDescription($conn, $productId, $categoryId, $attributeValue)
+{
+
+    $id = generateId($conn, 'description');
+    $descId = "DESC#00" . $id;
+
+
+
+    $sql = "INSERT INTO description(description_id,product_id,category_id)
+            VALUES('$descId','$productId','$categoryId')";
+
+    $result = mysqli_query($conn, $sql);
+
+
+
+    $count = 0;
+    for ($i = 0; $i < sizeof($attributeValue); $i++) {
+        echo $attributeValue[$i] . "<br>";
+
+        $att = 'att_val_' . ($i + 1);
+
+        $sql = "UPDATE description
+                SET $att = '$attributeValue[$i]'
+                WHERE description_id = '$descId'";
+        $result = mysqli_query($conn, $sql);
+
+        if ($result) {
+
+            $count++;
+        } else {
+            echo "Desc not ok";
+        }
+    }
+    if ($count == sizeof($attributeValue)) {
+        header('location:/online_shopping_system/seller/seller_add_product.php');
+    }
+}
+
+
+function getSingleCategory($conn, $categoryId)
+{
+    $sql = "SELECT * FROM category
+            WHERE category_id = '$categoryId'";
+
+
+    $result = mysqli_query($conn, $sql);
+
+    $desc = array();
+    if ($result->num_rows > 0) {
+
+        while ($row = mysqli_fetch_assoc($result)) {
+
+            for ($i = 1; $i <= 30; $i++) {
+
+                if ($row['att' . $i] != '') {
+
+                    $desc[$i] = $row['att' . $i];
+                }
+            }
+        }
+    }
 
 
     $sql = "SELECT * FROM category
@@ -682,12 +760,50 @@ function getAllCategory($conn, $categoryId)
             $categoryInfo = array('category_id' => $row['category_id'], 'category_name' => $row['category_name'], 'attributes' => '');
         }
     }
-
-    // echo  "size " . sizeof($categoryInfo);
     $categoryInfo['attributes'] = $desc;
 
-    $_SESSION['category_info'] = $categoryInfo;
-    // echo gettype($categoryInfo['attributes']);
-    header('location:/online_shopping_system/seller/seller_add_product.php');
-    // return $categoryInfo;
+    return $categoryInfo;
+}
+
+function getSingleDescription($conn, $productId, $categoryId)
+{
+    $sql = "SELECT * FROM description
+            WHERE category_id = '$categoryId' AND product_id = '$productId'";
+
+
+    $result = mysqli_query($conn, $sql);
+
+    $descVal = array();
+    if ($result->num_rows > 0) {
+
+        while ($row = mysqli_fetch_assoc($result)) {
+
+            for ($i = 1; $i <= 30; $i++) {
+
+                if ($row['att_val_' . $i] != '') {
+
+                    $descVal[$i] = $row['att_val_' . $i];
+                }
+            }
+        }
+    }
+
+
+    $sql = "SELECT * FROM description
+            WHERE category_id = '$categoryId'  AND product_id = '$productId'";
+
+
+    $result = mysqli_query($conn, $sql);
+    $descInfo = array();
+    if ($result->num_rows > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $descInfo = array('desc_id' => $row['description_id'], 'attributeValues' => '');
+        }
+    }
+
+    $descInfo['attributeValues'] = $descVal;
+
+    //echo sizeof($descInfo['attributeValues']) . 'fuck';
+    // exit();
+    return $descInfo;
 }

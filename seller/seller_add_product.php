@@ -18,6 +18,31 @@ session_start();
 
     <form action="/online_shopping_system/includes/seller_inc/seller_add_product_inc.php" method="POST" enctype="multipart/form-data">
         <input type="text" name="user_id" hidden value="<?php echo $_SESSION["user_id"]; ?>">
+
+
+
+        <div class="mb-3">
+            <label class="form-label">Product Category</label><br>
+
+            <select name="category_id">
+                <?php
+                foreach ($categories as $category) {
+
+                ?>
+                <?php
+                    echo "<option id ='category'>" . $category['category_id'] . " - " . $category['category_name'] . " </option>";
+                }
+                ?>
+            </select>
+            <input type="submit" value="Select Category" class="btn btn-info btn-sm" name="show_attribute"><br>
+        </div>
+        <div class="mb-3">
+            <?php if (isset($_SESSION['category_info'])) {
+            ?>
+                <h3>Category: <?php echo $_SESSION['category_info']['category_name'] ?></h3>
+                <input type="text" name="category_id_main" hidden value="<?php echo $_SESSION['category_info']['category_id']; ?>">
+            <?php } ?>
+        </div>
         <div class="mb-3">
             <label class="form-label">Product Name</label> <br>
             <input type="text" name="product_name">
@@ -35,24 +60,6 @@ session_start();
             <textarea name='product_description'></textarea>
         </div>
         <div class="mb-3">
-            <label class="form-label">Product Category</label><br>
-            <select name="category_id">
-                <?php
-                foreach ($categories as $category) {
-
-                ?>
-                <?php
-                    echo "<option id ='category'>" . $category['category_id'] . " - " . $category['category_name'] . " </option>";
-                }
-                ?>
-            </select>
-            <input type="submit" value="show category" class="btn btn-info btn-sm" name="show_attribute"><br>
-
-        </div>
-
-
-        <div class="mb-3">
-
             <?php
             if (isset($_SESSION['category_info'])) {
 

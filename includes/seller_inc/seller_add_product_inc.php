@@ -22,13 +22,20 @@ if (isset($_POST['add_product']) && isset($_FILES['product_image_1']) && isset($
         array_push($attributeValue, $_POST[$i]);
     }
 
-
     $productName = $_POST['product_name'];
     $productUnitPrice = $_POST['product_unit_price'];
     $productDescription = $_POST['product_description'];
     $productQuantity = $_POST['product_quantity'];
-    $categoryId = $_POST['category_id'];
+    $categoryId = $_POST['category_id_main'];
     $userId = $_POST['user_id'];
+
+    // // echo $categoryId;
+
+    // // exit();
+
+    // $categoryId = explode(" - ", $categoryId);
+    // $categoryId =  $categoryId[0];
+    // //echo $categoryId;
 
     $sellerInfo = getSellerInfo($conn, $userId);
 
@@ -39,6 +46,7 @@ if (isset($_POST['add_product']) && isset($_FILES['product_image_1']) && isset($
     $uploadDate =  date("Y/m/d");
     $productId = addSellerProduct($conn, $productName, $productUnitPrice, $productDescription, $productQuantity,  $uploadDate, $categoryId, $sellerInfo['seller_id'], $imgID1, $imgID2);
 
-    echo  $productId;
-    exit();
+    // //echo  
+    // $productId = 'PROD#001';
+    addToDescription($conn, $productId, $categoryId, $attributeValue);
 }

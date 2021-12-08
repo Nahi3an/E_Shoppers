@@ -10,6 +10,14 @@ if (isset($_POST['go_to_product']) || isset($_POST['display-product'])) {
 
     $productInfo = getProductInfo($conn, $_POST['product_id']);
 
+    // echo $productInfo['category_id'];
+    $categoryInfo = getSingleCategory($conn, $productInfo['category_id']);
+    $description = getSingleDescription($conn, $productInfo['product_id'], $productInfo['category_id']);
+    // echo sizeof($categoryInfo['attributes']);
+
+    // echo $productInfo['product_id'];
+
+
 ?>
 
     <div class="container product-description" style="height: 500px;">
@@ -27,11 +35,21 @@ if (isset($_POST['go_to_product']) || isset($_POST['display-product'])) {
             </div>
             <div class="col">
                 <h3><?php echo  $productInfo['product_name'] ?></h3>
-
-                <h5>
+                <p>
                     <?php echo $productInfo['product_description'] ?>
-                </h5>
+                </p>
+                <span>Price: <?php echo $productInfo['product_unit_price'] ?> BDT</span> <br>
+                <a class="btn btn-danger btn-sm mt-2">Buy Now</a>
             </div>
+        </div>
+
+        <div id='description-table'>
+            <dl class="row">
+                <?php foreach ($categoryInfo['attributes'] as $key => $attribute) { ?>
+                    <dt class="col-sm-3"><?php echo  $attribute; ?></dt>
+                    <dd class="col-sm-9"><?php echo $description['attributeValues'][$key] ?></dd>
+                <?php } ?>
+            </dl>
         </div>
     </div>
 
