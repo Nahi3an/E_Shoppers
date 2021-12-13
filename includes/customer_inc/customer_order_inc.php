@@ -1,7 +1,5 @@
 <?php
 if (isset($_POST['confirm_order'])) {
-
-
     session_start();
 
     include_once '../dbh_inc.php';
@@ -12,62 +10,49 @@ if (isset($_POST['confirm_order'])) {
 
 
     $sellerIds = array();
+    $count = 0;
     foreach ($_SESSION['show_cart'] as $info) {
 
-        $productInfo = getProductInfo($conn,  $info['product_id']);
-        array_push($sellerIds, $productInfo['seller_id']);
+        $orderDate =  date("Y/m/d");
+        $orderQuantity = $info['product_quantity'];
+        $orderPrice = $info['product_quantity'] * $info['product_unit_price'];
+        $productId = $info['product_id'];
+        $productInfo = getProductInfo($conn, $productId);
+        $orderDone = addToOrderTable($conn, $orderDate, $orderQuantity, $orderPrice, $paymentMethod, $productId, $customerId, $productInfo['seller_id']);
+
+        if ($orderDone) {
+            $count++;
+        }
     }
 
-    $orderSuccess = addToOrderTable($conn, $_SESSION['show_cart'], $paymentMethod, $customerId, $sellerIds);
+    if ($count == sizeof($_SESSION['show_cart'])) {
 
-    if ($orderSuccess) {
-
-        $count = 0;
-        foreach ($_SESSION['show_cart'] as $info) {
-
-            $productId = $info['product_id'];
-            $sql  = "SELECT product_quanity 
-                     FROM product
-                     WHERE product_id='$productId'";
-
-            $res = mysqli_query($conn, $sql);
-
-            if ($res->num_rows > 0) {
-                while ($row = mysqli_fetch_assoc($res)) {
-
-                    $oldQuantity = $row['product_quanity'];
-                }
-            }
-
-
-            $updatedQuantity  = (int)$oldQuantity - (int)$info['product_quantity'];
-
-
-            $sql = "UPDATE product
-                    SET  product_quanity = '$updatedQuantity'
-                    WHERE product_id  = '$productId'";
-
-            $res = mysqli_query($conn, $sql);
-
-            if ($res) {
-
-                $count++;
-            } else {
-
-                echo "Error";
-                exit();
-            }
-        }
-
-
-        if ($count == sizeof($_SESSION['show_cart'])) {
-
-            echo "<script>
+        echo "<script>
                   alert('Order has been placed');
                   window.location.href='/online_shopping_system/main.php';
                   </script>";
 
-            $_SESSION['show_cart'] = array();
-        }
+        $_SESSION['show_cart'] = array();
+    }
+} else if (isset($_POST['buy_now_order'])) {
+
+    include_once '../dbh_inc.php';
+    include_once '../function_inc.php';
+
+    $customerId = $_POST['customer_id'];
+    $paymentMethod = $_POST['payment_method'];
+    $orderDate =  date("Y/m/d");
+    $orderQuantity = $_POST['product_quantity'];
+    $orderPrice =    $_POST['product_quantity'] * $_POST['product_unit_price'];
+    $productId =     $_POST['product_id'];
+    // echo  $customerId . " " . $paymentMethod . " " . $productId . " " .  $orderPrice;
+    $productInfo = getProductInfo($conn, $productId);
+    $orderDone = addToOrderTable($conn, $orderDate, $orderQuantity, $orderPrice, $paymentMethod, $productId, $customerId, $productInfo['seller_id']);
+
+    if ($orderDone) {
+        echo "<script>
+        alert('Order has been placed');
+        window.location.href='/online_shopping_system/main.php';
+        </script>";
     }
 }

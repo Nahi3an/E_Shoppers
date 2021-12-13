@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") //to access only form's submit method=
 {
     if (!isset($_SESSION['user_id'])) {
         echo "<script>
-        alert('please login first');
+        alert('Please Login First');
         window.location.href='login.php';
         </script>";
         exit();

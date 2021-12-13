@@ -36,11 +36,11 @@
                     </li>
                 </ul>
             </div>
-            <li class="nav-item">
-                <form action="/online_shopping_system/logout.php" method="POST">
-                    <button type="submit" name="logout_btn" class="btn btn-small btn-danger">Logout</button>
-                </form>
 
-            </li>
+            <form action="/online_shopping_system/logout.php" method="POST">
+                <button type="submit" name="logout_btn" class="btn btn-small btn-danger">Logout</button>
+            </form>
+
+
         </div>
     </nav>

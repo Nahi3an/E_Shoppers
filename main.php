@@ -18,28 +18,23 @@ $productInfo = getProductByAdmin($conn);
                         <form action="/online_shopping_system/product/single_product.php" method="POST">
                             <input type="text" hidden name="product_id" value="<?php echo $product['product_id']; ?>">
                             <button type="submit" name="display-product" style="background: white; border: none;">
-                                <h5><?php echo  $product['product_name'] ?></h5>
+                                <h6><b><?php echo  $product['product_name'] ?></b></h6>
                             </button>
                         </form>
                         <span class="card-text">Price : <?php echo $product['product_unit_price'] ?></span>
                         <span class="card-text">In Stock : <?php echo $product['product_quanity'] ?></span>
 
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <form action="/online_shopping_system/cart.php" method="POST">
-                                    <input type="hidden" class="Id" name="product_id" value="<?php echo $product['product_id'] ?>">
-                                    <input type="hidden" name="product_name" value="<?php echo $product['product_name'] ?>">
-                                    <input type="hidden" class="mrp" name="product_unit_price" value="<?php echo $product['product_unit_price'] ?>">
-                                    <input type="submit" class="btn btn-primary btn-sm" name="add_to_cart" value="Add to cart">
-                                </form>
+
+
+                        <form action="/online_shopping_system/cart.php" method="POST">
+                            <div class="mb-2">
+                                <input type="hidden" class="Id" name="product_id" value="<?php echo $product['product_id'] ?>">
+                                <input type="hidden" name="product_name" value="<?php echo $product['product_name'] ?>">
+                                <input type="hidden" class="mrp" name="product_unit_price" value="<?php echo $product['product_unit_price'] ?>">
                             </div>
-                            <div class="col-md-6">
-                                <form action="/online_shopping_system/product/single_product.php" method="POST">
-                                    <input type="text" hidden name="product_id" value="<?php echo $product['product_id']; ?>">
-                                    <input type="submit" class="btn btn-danger btn-sm" name="buy_now" value="Buy Now">
-                                </form>
-                            </div>
-                        </div>
+
+                            <input type="submit" class="btn btn-primary btn-sm btn-block" name="add_to_cart" value="Add to cart">
+                        </form>
 
                     </div>
                 </div>

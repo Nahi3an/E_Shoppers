@@ -805,39 +805,84 @@ function getSingleDescription($conn, $productId, $categoryId)
 
     $descInfo['attributeValues'] = $descVal;
 
-    //echo sizeof($descInfo['attributeValues']) . 'fuck';
-    // exit();
     return $descInfo;
 }
 
-function addToOrderTable($conn, $cartInfo, $paymentMethod, $customerId, $sellerIds)
+function  addToOrderTable($conn, $orderDate, $orderQuantity, $orderPrice, $paymentMethod, $productId, $customerId, $sellerId)
 {
 
-    // echo sizeof($cartInfo);
-    $count = 0;
-    foreach ($cartInfo as $key => $info) {
-        $orderDate =  date("Y/m/d");
-        $id = generateId($conn, 'orders');
-        $orderId = "Order#00" . $id;
-        $orderQuantity = $info['product_quantity'];
-        $orderPrice = $info['product_quantity'] * $info['product_unit_price'];
-        $productId = $info['product_id'];
-        $sellerId = $sellerIds[$key];
-        $sql = "INSERT INTO orders(order_id,order_date,order_quantity,order_price,order_payment_method,product_id,customer_id,seller_id)
-        VALUES ('$orderId','$orderDate', '$orderQuantity','$orderPrice','$paymentMethod','$productId','$customerId','$sellerId')";
+    $id = generateId($conn, 'orders');
+    $orderId = "Order#00" . $id;
+    $sql = "INSERT INTO orders(order_id,order_date,order_quantity,order_price,order_payment_method,product_id,customer_id,seller_id)
+               VALUES ('$orderId','$orderDate', '$orderQuantity','$orderPrice','$paymentMethod','$productId','$customerId','$sellerId')";
 
-        $result = mysqli_query($conn, $sql);
-        if ($result) {
-            $count++;
-        } else {
+    $result = mysqli_query($conn, $sql);
 
-            echo "Error";
-            exit();
+    if ($result) {
+
+        $sql  = "SELECT product_quanity 
+                FROM product
+                WHERE product_id='$productId'";
+
+        $res = mysqli_query($conn, $sql);
+
+        if ($res->num_rows > 0) {
+            while ($row = mysqli_fetch_assoc($res)) {
+
+                $oldQuantity = $row['product_quanity'];
+            }
         }
-    }
 
-    if ($count == sizeof($cartInfo)) {
+        $updatedQuantity  = (int)$oldQuantity - (int)$orderQuantity;
 
-        return true;
+
+        $sql = "UPDATE product
+                SET  product_quanity = '$updatedQuantity'
+                WHERE product_id  = '$productId'";
+
+        $res = mysqli_query($conn, $sql);
+
+        if ($res) {
+
+            return true;
+        } else {
+            echo "Quanitity Error";
+        }
+    } else {
+
+        echo "Order Error";
     }
 }
+
+
+
+
+
+
+    // echo sizeof($cartInfo);
+    // $count = 0;
+    // foreach ($cartInfo as $key => $info) {
+    //     $orderDate =  date("Y/m/d");
+    //     $id = generateId($conn, 'orders');
+    //     $orderId = "Order#00" . $id;
+    //     $orderQuantity = $info['product_quantity'];
+    //     $orderPrice = $info['product_quantity'] * $info['product_unit_price'];
+    //     $productId = $info['product_id'];
+    //     $sellerId = $sellerIds[$key];
+    //     $sql = "INSERT INTO orders(order_id,order_date,order_quantity,order_price,order_payment_method,product_id,customer_id,seller_id)
+    //     VALUES ('$orderId','$orderDate', '$orderQuantity','$orderPrice','$paymentMethod','$productId','$customerId','$sellerId')";
+
+    //     $result = mysqli_query($conn, $sql);
+    //     if ($result) {
+    //         $count++;
+    //     } else {
+
+    //         echo "Error";
+    //         exit();
+    //     }
+    // }
+
+    // if ($count == sizeof($cartInfo)) {
+
+    //     return true;
+    // }

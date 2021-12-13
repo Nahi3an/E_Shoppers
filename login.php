@@ -8,7 +8,7 @@ include_once './header.php';
 
 <div class="login-page container">
     <br>
-    <h3>LogIn</h3>
+    <h3>Log In</h3>
 
     <form action="/online_shopping_system/includes/login_inc.php" method="POST">
         <label>Enter Email:</label><br>

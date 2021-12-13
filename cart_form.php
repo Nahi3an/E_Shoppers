@@ -1,8 +1,16 @@
 <?php
 include_once './header.php';
 
+if (!isset($_SESSION['user_id'])) {
+    echo "<script>
+    alert('Please Login First');
+    window.location.href='/online_shopping_system/login.php';
+    </script>";
+    exit();
+}
 include_once './includes/dbh_inc.php';
 include_once './includes/function_inc.php';
+
 $customerInformation = getCustomerInfo($conn, $_SESSION['user_id']);
 ?>
 <div class="container" style="height: 1000px;">
@@ -62,53 +70,75 @@ $customerInformation = getCustomerInfo($conn, $_SESSION['user_id']);
                         Online Payment
                     </label>
                 </div>
-                <button type="submit" name="confirm_order" class="btn btn-primary">Confirm Order</button>
+
+                <?php if (isset($_POST['buy_now'])) { ?>
+                    <input type="text" hidden name="product_id" value="<?php echo  $_POST['product_id']; ?>">
+                    <input type="text" hidden name="product_name" value="<?php echo  $_POST['product_name']; ?>">
+                    <input type="number" hidden name="product_unit_price" value="<?php echo $_POST['product_unit_price']; ?>">
+                    <input type="number" hidden name="product_quantity" value="<?php echo $_POST['product_quantity']; ?>">
+                    <button type="submit" name="buy_now_order" class="btn btn-primary">Confirm Order</button>
+                <?php } else {
+                ?>
+                    <button type="submit" name="confirm_order" class="btn btn-primary">Confirm Order</button>
+                <?php } ?>
+
             </form>
 
         </div>
 
     </div>
 
-    <?php
-    if (isset($_POST['buy_now']))
-    ?>
-
     <div class="col mt-5">
 
+        <h4>Order Overview</h4>
+        <table class="table table-sm">
+            <thead>
+                <td>Product Name</td>
+                <td>Unit Price</td>
+                <td>Quantiy</td>
+                <td>Total</td>
+            </thead>
 
-        <?php
-    if (isset($_SESSION['show_cart']) && count($_SESSION['show_cart']) > 0) {
+            <?php
+            if (isset($_POST['buy_now'])) { ?>
 
-
-        ?>
-            <h4>Order Overview</h4>
-            <table class="table table-sm">
-                <thead>
-                    <td>Product Name</td>
-                    <td>Unit Price</td>
-                    <td>Quantiy</td>
-                    <td>Total</td>
-                </thead>
                 <tbody>
+                    <tr>
+                        <td><?php echo $_POST['product_name'] ?></td>
+                        <td><?php echo $_POST['product_unit_price'] ?></td>
+                        <td><?php echo $_POST['product_quantity'] ?></td>
+                        <td><?php echo $_POST['product_quantity'] * $_POST['product_unit_price'] ?></td>
 
-                    <?php
+                    </tr>
+                </tbody>
+
+        </table>
+        <?php
+            } else {
+
+                if (isset($_SESSION['show_cart']) && count($_SESSION['show_cart']) > 0) {
+        ?>
+            <tbody>
+
+                <?php
                     foreach ($_SESSION['show_cart'] as $key => $value) {
 
 
-                    ?>
-                        <tr>
-                            <td><?php echo $value['product_name'] ?></td>
-                            <td><?php echo $value['product_unit_price'] ?></td>
-                            <td><?php echo $value['product_quantity'] ?></td>
-                            <td><?php echo $value['product_quantity'] * $value['product_unit_price'] ?></td>
-                        </tr>
-                    <?php } ?>
+                ?>
+                    <tr>
+                        <td><?php echo $value['product_name'] ?></td>
+                        <td><?php echo $value['product_unit_price'] ?></td>
+                        <td><?php echo $value['product_quantity'] ?></td>
+                        <td><?php echo $value['product_quantity'] * $value['product_unit_price'] ?></td>
+                    </tr>
+                <?php } ?>
 
 
-                </tbody>
+            </tbody>
 
             </table>
-        <?php } ?>
+    <?php }
+            } ?>
 
     </div>
 

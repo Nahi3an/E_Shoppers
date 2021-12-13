@@ -4,6 +4,8 @@
 // echo $_SESSION['user_role'] . "<br>";
 session_start();
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -23,6 +25,11 @@ session_start();
         font-size: 17px;
     }
 </style>
+
+<?php
+
+
+?>
 
 <body class="">
 
@@ -61,11 +68,41 @@ session_start();
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Product
                         </a>
+                        <?php
+
+                        $serverName = 'localhost';
+                        $dbName = 'online_shopping_system';
+                        $userName = 'root';
+                        $password = '';
+
+                        /**connecting to the database */
+                        $conn = mysqli_connect($serverName, $userName, $password, $dbName);
+                        if (!$conn) {
+                            die("Database Connection Failed : " . mysqli_connect_error());
+                        }
+
+                        $sql = "SELECT category_id,category_name
+                                     FROM category";
+
+                        $res = mysqli_query($conn, $sql);
+                        $categories = array();
+
+                        if ($res->num_rows > 0) {
+
+                            while ($row = $res->fetch_assoc()) {
+
+                                $category = array('category_id' => $row['category_id'], 'category_name' => $row['category_name']);
+                                array_push($categories, $category);
+                            }
+                        }
+
+                        ?>
+
+
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Laptop</a></li>
-                            <li><a class="dropdown-item" href="#">Monitor</a></li>
-                            <li><a class="dropdown-item" href="#">Keyboard</a></li>
-                            <li><a class="dropdown-item" href="#">Mouse</a></li>
+                            <?php foreach ($categories as $category) { ?>
+                                <li><a class="dropdown-item" href="#"><?php echo $category['category_name']; ?></a></li>
+                            <?php } ?>
                         </ul>
                     </li>
                     <li class="nav-item">

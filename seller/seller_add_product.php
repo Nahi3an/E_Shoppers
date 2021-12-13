@@ -56,8 +56,8 @@ session_start();
             <input type="text" name='product_unit_price'>
         </div>
         <div class="mb-3">
-            <label class="form-label">Product Description</label><br>
-            <textarea name='product_description'></textarea>
+            <label class="form-label">Product Short Description</label><br>
+            <textarea name='product_description' rows="4" cols="40"></textarea>
         </div>
         <div class="mb-3">
             <?php
