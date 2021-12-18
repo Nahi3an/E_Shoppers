@@ -3,7 +3,7 @@ include_once '../header.php';
 
 
 
-if (isset($_POST['go_to_product']) || isset($_POST['display-product']) || isset($_POST['buy_now'])) {
+if (isset($_POST['go_to_product']) || isset($_POST['display-product']) || isset($_POST['buy_now']) || isset($_POST['display-category-product'])) {
 
     include_once '../includes/dbh_inc.php';
     include_once '../includes/function_inc.php';

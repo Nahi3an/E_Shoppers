@@ -101,7 +101,14 @@ session_start();
 
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <?php foreach ($categories as $category) { ?>
-                                <li><a class="dropdown-item" href="#"><?php echo $category['category_name']; ?></a></li>
+                                <li>
+                                    <form action="/online_shopping_system/product/category_product.php" method="POST">
+                                        <input type="text" hidden name="category-id" value="<?php echo $category['category_id']; ?>">
+                                        <button type="submit" class="pb-2" name="display-category-product" style="background: white; border: none;">
+                                            <?php echo  $category['category_name'] ?>
+                                        </button>
+                                    </form>
+                                </li>
                             <?php } ?>
                         </ul>
                     </li>

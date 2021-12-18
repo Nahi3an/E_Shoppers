@@ -856,33 +856,26 @@ function  addToOrderTable($conn, $orderDate, $orderQuantity, $orderPrice, $payme
 
 
 
+function  getProductByCategory($conn, $categoryId)
+{
+
+    $sql = "SELECT product_id, product_name, product_unit_price, product_description, product_quanity,upload_date, product_image_1,	product_image_2,category_id, seller_id	
+            FROM product
+            WHERE category_id = '$categoryId'";
+
+    $res = mysqli_query($conn, $sql);
+
+    $productInfo = array();
+    if ($res->num_rows > 0) {
+
+        while ($row = mysqli_fetch_assoc($res)) {
+
+            // echo $row['product_id'] . "<br>";
+            $product = array('product_id' => $row['product_id'], 'product_name' => $row['product_name'], 'product_unit_price' => $row['product_unit_price'], 'product_description' => $row['product_description'], 'product_quanity' => $row['product_quanity'], 'upload_date' => $row['upload_date'], 'product_image_1' => $row['product_image_1'], 'category_id' => $row['category_id']);
+            array_push($productInfo, $product);
+        }
+    }
 
 
-
-    // echo sizeof($cartInfo);
-    // $count = 0;
-    // foreach ($cartInfo as $key => $info) {
-    //     $orderDate =  date("Y/m/d");
-    //     $id = generateId($conn, 'orders');
-    //     $orderId = "Order#00" . $id;
-    //     $orderQuantity = $info['product_quantity'];
-    //     $orderPrice = $info['product_quantity'] * $info['product_unit_price'];
-    //     $productId = $info['product_id'];
-    //     $sellerId = $sellerIds[$key];
-    //     $sql = "INSERT INTO orders(order_id,order_date,order_quantity,order_price,order_payment_method,product_id,customer_id,seller_id)
-    //     VALUES ('$orderId','$orderDate', '$orderQuantity','$orderPrice','$paymentMethod','$productId','$customerId','$sellerId')";
-
-    //     $result = mysqli_query($conn, $sql);
-    //     if ($result) {
-    //         $count++;
-    //     } else {
-
-    //         echo "Error";
-    //         exit();
-    //     }
-    // }
-
-    // if ($count == sizeof($cartInfo)) {
-
-    //     return true;
-    // }
+    return $productInfo;
+}

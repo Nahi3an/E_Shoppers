@@ -17,7 +17,7 @@ $productInfo = getProductByAdmin($conn);
                     <div class="card-body">
                         <form action="/online_shopping_system/product/single_product.php" method="POST">
                             <input type="text" hidden name="product_id" value="<?php echo $product['product_id']; ?>">
-                            <button type="submit" name="display-product" style="background: white; border: none;">
+                            <button type="submit" name="display-category-product" style="background: white; border: none;">
                                 <h6><b><?php echo  $product['product_name'] ?></b></h6>
                             </button>
                         </form>
@@ -46,13 +46,6 @@ $productInfo = getProductByAdmin($conn);
 
     </div>
 </div>
-
-<!-- <script>
-    function vistProduct() {
-        document.getElementById("display-form").submit();
-    }
-</script> -->
-
 
 <?php
 

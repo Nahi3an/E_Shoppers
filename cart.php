@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") //to access only form's submit method=
         </script>";
         exit();
     }
-    if (isset($_POST['add_to_cart'])) //to check add(Add to cart) button clicked or not, and product's details can be transfer by $_post 
+    if (isset($_POST['add_to_cart']) || isset($_POST['add_to_cart_category'])) //to check add(Add to cart) button clicked or not, and product's details can be transfer by $_post 
     {
 
         if (isset($_SESSION['show_cart'])) //when session cart is set by a value already,and want to add more 
@@ -23,18 +23,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") //to access only form's submit method=
 
                 // echo "item already added <br>";
                 echo "<script>
-                         alert('item already added');
-                         window.location.href='main.php';
-                      </script>";
+                    alert('item already added');
+                    window.location.href='main.php';
+                 </script>";
             } else {
 
                 $count = count($_SESSION['show_cart']); //to count total product nmb of cart
                 $_SESSION['show_cart'][$count] = array('product_id' => $_POST['product_id'], 'product_name' => $_POST['product_name'], 'product_unit_price' => $_POST['product_unit_price'], 'product_quantity' => 1); //to show cart iteam at count index
 
+                // if (isset($_POST['add_to_cart_category'])) {
                 echo "<script>
-                             alert('item added');
-                             window.location.href='main.php';
-                     </script>";
+                    alert('item  added');
+                    window.location.href='main.php';
+                 </script>";
             }
         } else //no product selected before,so set array with value in session's zero nmb index
         {
@@ -43,10 +44,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") //to access only form's submit method=
             $_SESSION['show_cart'][0] = array('product_id' => $_POST['product_id'], 'product_name' => $_POST['product_name'], 'product_unit_price' => $_POST['product_unit_price'], 'product_quantity' => 1); //to show cart item at 0 index
 
 
+
             echo "<script>
-            alert('item added');
-            window.location.href='main.php';
-            </script>";
+                alert('item added');
+                window.location.href='main.php';
+             </script>";
         }
 
         echo sizeof($_SESSION['show_cart']);

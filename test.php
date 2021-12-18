@@ -1,19 +1,28 @@
 <?php
 
-include_once './includes/dbh_inc.php';
+// require('./fpdf/fpdf.php');
 
-for ($i = 1; $i <= 30; $i++) {
+// // Instantiate and use the FPDF class 
+// $pdf = new FPDF();
 
-    $att = 'att_val_' . $i;
+// $pdf->AddPage();
 
-    $sql = "ALTER TABLE description
-            ADD $att varchar(255)";
-    $result = mysqli_query($conn, $sql);
+// // Set the font for the text
+// $pdf->SetFont('Arial', 'B', 18);
 
-    if ($result) {
-        echo "ok" . $i . "<br>";
-    } else {
+// // Prints a cell with given text 
+// $pdf->Cell(60, 20, 'Hello GeeksforGeeks!');
 
-        echo "not ok" . $i . "<br>";
-    }
-}
+// // return the generated output
+// $pdf->Output();
+
+require_once __DIR__ . '/vendor/autoload.php';
+// Create an instance of the class:
+$mpdf = new \Mpdf\Mpdf();
+
+// Write some HTML code:
+$mpdf->WriteHTML('Hello World');
+
+
+// Output a PDF file directly to the browser
+$mpdf->Output('test.pdf', 'D');

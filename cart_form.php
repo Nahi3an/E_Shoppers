@@ -138,7 +138,10 @@ $customerInformation = getCustomerInfo($conn, $_SESSION['user_id']);
 
             </table>
     <?php }
-            } ?>
+            }
+
+
+    ?>
 
     </div>
 
