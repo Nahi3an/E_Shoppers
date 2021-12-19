@@ -813,8 +813,8 @@ function  addToOrderTable($conn, $orderDate, $orderQuantity, $orderPrice, $payme
 
     $id = generateId($conn, 'orders');
     $orderId = "Order#00" . $id;
-    $sql = "INSERT INTO orders(order_id,order_date,order_quantity,order_price,order_payment_method,product_id,customer_id,seller_id)
-               VALUES ('$orderId','$orderDate', '$orderQuantity','$orderPrice','$paymentMethod','$productId','$customerId','$sellerId')";
+    $sql = "INSERT INTO orders(order_id,order_date,order_quantity,order_price,order_payment_method,product_id, order_status,customer_id,seller_id)
+               VALUES ('$orderId','$orderDate', '$orderQuantity','$orderPrice','$paymentMethod','$productId','processing',$customerId','$sellerId')";
 
     $result = mysqli_query($conn, $sql);
 
@@ -878,4 +878,49 @@ function  getProductByCategory($conn, $categoryId)
 
 
     return $productInfo;
+}
+
+
+function getAllOrdersOfSeller($conn, $sellerId)
+{
+
+    $sql = "SELECT order_id,order_date,order_quantity,order_price,order_payment_method,product_id, order_status,customer_id,seller_id
+            FROM orders
+            WHERE seller_Id = '$sellerId'";
+
+    $res = mysqli_query($conn, $sql);
+
+    $orderInfo = array();
+
+    //order_id,order_date,order_quantity,order_price,order_payment_method,product_id, order_status,customer_id,seller_id
+    if ($res->num_rows > 0) {
+
+        while ($row = mysqli_fetch_assoc($res)) {
+
+            // echo $row['product_id'] . "<br>";
+            $order = array('order_id' => $row['order_id'], 'order_date' => $row['order_date'], 'order_quantity' => $row['order_quantity'], 'order_price' => $row['order_price'], 'order_payment_method' => $row['order_payment_method'], 'product_id' => $row['product_id'], 'order_status' => $row['order_status'], 'customer_id' => $row['customer_id'], 'seller_id' => $row['seller_id']);
+            array_push($orderInfo, $order);
+        }
+    }
+
+    return $orderInfo;
+}
+
+function changeOrderStatus($conn, $newStatus, $orderId, $changerId, $changer)
+{
+
+    if ($changer == 'seller') {
+        $sql = "UPDATE orders
+        SET order_status = '$newStatus'
+        WHERE seller_id = '$changerId' AND order_id = '$orderId'";
+        $res = mysqli_query($conn, $sql);
+
+        if ($res) {
+
+            echo "Status Changed";
+        }
+    } else if ($changer == 'customer') {
+
+        echo "Customer";
+    }
 }

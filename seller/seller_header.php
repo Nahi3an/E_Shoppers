@@ -32,7 +32,7 @@
                         <a class="nav-link" href="#">Transactions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Orders</a>
+                        <a class="nav-link" href="/online_shopping_system/seller/seller_order.php">Orders</a>
                     </li>
                 </ul>
             </div>
