@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2021 at 08:19 PM
+-- Generation Time: Dec 19, 2021 at 09:30 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -193,6 +193,7 @@ INSERT INTO `description` (`id`, `description_id`, `product_id`, `category_id`, 
 (30, 'DESC#0030', 'PROD#0050', 'C#007', 'MT-C500', '', '19 keys anti-ghosting', '180cm', 'USB', 'More than 10 million times (Error-free running time)', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (31, 'DESC#0031', 'PROD#0051', 'C#007', 'Mechanical', 'wired', '84 Keys Color Coded', '1.5±0.01m', 'USB', '', 'Green, Blue, White, Red, Purple, Yellow', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (37, 'DESC#0032', 'PROD#0052', 'C#009', 'Viltrox EF-EOS M', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(38, 'DESC#0038', 'PROD#0055', 'C#004', 'AMD', 'Ryzen 7 3700X', '3.6GHz', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (7, 'DESC#007', 'PROD#0030', 'C#008', 'USB ', 'approx:131 x 68 x 42mm', 'LED light', '5 million times', '60 gm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (8, 'DESC#008', 'PROD#0031', 'C#006', 'gaming', 'light', 'black', '1.5m', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (9, 'DESC#009', 'PROD#0032', 'C#002', 'Intel Celeron Processor N3350 (1.10 GHz-2.40 GHz 2 MB Cache Cores: 2 Threads: 2)', '12.2\" TFT, (1920 x 1200) IPS Touch Screen', '4GB RAM', '64GB eMMC', 'Intel HD Graphics 500', 'Li-ion Battery', 'USB 3.0 x 1', '2 MP', 'Overall weight : 1.41kg / Tablet weight: 1.07kg / Keyboard weight: 0.34kg', 'Charcoal Grey', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -211,6 +212,7 @@ CREATE TABLE `orders` (
   `order_price` decimal(10,2) NOT NULL,
   `order_payment_method` varchar(70) NOT NULL,
   `product_id` varchar(255) DEFAULT NULL,
+  `order_status` varchar(255) DEFAULT NULL,
   `customer_id` varchar(255) DEFAULT NULL,
   `seller_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -219,17 +221,24 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `order_id`, `order_date`, `order_quantity`, `order_price`, `order_payment_method`, `product_id`, `customer_id`, `seller_id`) VALUES
-(13, 'Order#001', '2021-12-08', 3, '4500.00', 'cash_on_delivery', 'PROD#0030', 'C#0010', 'S#001'),
-(14, 'Order#0014', '2021-12-08', 4, '84000.00', 'cash_on_delivery', 'PROD#001', 'C#0010', 'S#001'),
-(15, 'Order#0015', '2021-12-08', 1, '1500.00', 'cash_on_delivery', 'PROD#0030', 'C#0010', 'S#001'),
-(16, 'Order#0016', '2021-12-08', 2, '42000.00', 'cash_on_delivery', 'PROD#001', 'C#0010', 'S#001'),
-(17, 'Order#0017', '2021-12-08', 2, '3000.00', 'cash_on_delivery', 'PROD#0030', 'C#0010', 'S#001'),
-(18, 'Order#0018', '2021-12-08', 2, '4000.00', 'cash_on_delivery', 'PROD#0031', 'C#0010', 'S#001'),
-(19, 'Order#0019', '2021-12-08', 3, '4500.00', 'cash_on_delivery', 'PROD#0030', 'C#0010', 'S#001'),
-(20, 'Order#0020', '2021-12-08', 3, '6000.00', 'cash_on_delivery', 'PROD#0031', 'C#0010', 'S#001'),
-(21, 'Order#0021', '2021-12-14', 2, '4000.00', 'cash_on_delivery', 'PROD#0031', 'C#0010', 'S#001'),
-(22, 'Order#0022', '2021-12-14', 1, '1500.00', 'cash_on_delivery', 'PROD#0030', 'C#002', 'S#001');
+INSERT INTO `orders` (`id`, `order_id`, `order_date`, `order_quantity`, `order_price`, `order_payment_method`, `product_id`, `order_status`, `customer_id`, `seller_id`) VALUES
+(13, 'Order#001', '2021-12-08', 3, '4500.00', 'cash_on_delivery', 'PROD#0030', 'confirmed', 'C#0010', 'S#001'),
+(14, 'Order#0014', '2021-12-08', 4, '84000.00', 'cash_on_delivery', 'PROD#001', 'canceled_by_seller', 'C#0010', 'S#001'),
+(15, 'Order#0015', '2021-12-08', 1, '1500.00', 'cash_on_delivery', 'PROD#0030', 'processing', 'C#0010', 'S#001'),
+(16, 'Order#0016', '2021-12-08', 2, '42000.00', 'cash_on_delivery', 'PROD#001', 'processing', 'C#0010', 'S#001'),
+(17, 'Order#0017', '2021-12-08', 2, '3000.00', 'cash_on_delivery', 'PROD#0030', 'processing', 'C#0010', 'S#001'),
+(18, 'Order#0018', '2021-12-08', 2, '4000.00', 'cash_on_delivery', 'PROD#0031', 'processing', 'C#0010', 'S#001'),
+(19, 'Order#0019', '2021-12-08', 3, '4500.00', 'cash_on_delivery', 'PROD#0030', 'processing', 'C#0010', 'S#001'),
+(20, 'Order#0020', '2021-12-08', 3, '6000.00', 'cash_on_delivery', 'PROD#0031', 'processing', 'C#0010', 'S#001'),
+(21, 'Order#0021', '2021-12-14', 2, '4000.00', 'cash_on_delivery', 'PROD#0031', 'processing', 'C#0010', 'S#001'),
+(22, 'Order#0022', '2021-12-14', 1, '1500.00', 'cash_on_delivery', 'PROD#0030', 'confirmed', 'C#002', 'S#001'),
+(36, 'Order#0023', '2021-12-15', 3, '6000.00', 'cash_on_delivery', 'PROD#0031', 'processing', 'C#0010', 'S#001'),
+(37, 'Order#0037', '2021-12-15', 3, '4500.00', 'cash_on_delivery', 'PROD#0030', 'processing', 'C#0010', 'S#001'),
+(38, 'Order#0038', '2021-12-15', 2, '66000.00', 'cash_on_delivery', 'PROD#0033', 'processing', 'C#0010', 'S#001'),
+(39, 'Order#0039', '2021-12-15', 1, '40500.00', 'cash_on_delivery', 'PROD#0034', 'processing', 'C#0010', 'S#001'),
+(40, 'Order#0040', '2021-12-15', 1, '35700.00', 'cash_on_delivery', 'PROD#0039', 'processing', 'C#0010', 'S#001'),
+(41, 'Order#0041', '2021-12-15', 1, '5000.00', 'cash_on_delivery', 'PROD#0049', 'processing', 'C#0010', 'S#006'),
+(42, 'Order#0042', '2021-12-15', 2, '53000.00', 'cash_on_delivery', 'PROD#0055', 'processing', 'C#005', 'S#002');
 
 -- --------------------------------------------------------
 
@@ -257,16 +266,16 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`id`, `product_id`, `product_name`, `product_unit_price`, `product_description`, `product_quanity`, `upload_date`, `product_image_1`, `product_image_2`, `category_id`, `seller_id`) VALUES
 (29, 'PROD#001', 'Star PC AMD Athlon 3000G', '21000.00', 'The latest price of Star PC AMD Athlon 3000G in Bangladesh.It has 1 years warranty.', 16, '2021-12-07', 'PIMG-61afc2cf1bcb8.jpg', 'PIMG-61afc2cf1d79e.jpg', 'C#003', 'S#001'),
-(30, 'PROD#0030', 'Meetion MT-GM22 Dazzling Gaming Mouse', '1500.00', 'The Meetion MT-GM22 has been ergonomically designed for a comfortable  use.It has 6 months warranty.', 23, '2021-12-07', 'PIMG-61afcbdc60619.jpg', 'PIMG-61afcbdc621c1.jpg', 'C#008', 'S#001'),
-(31, 'PROD#0031', 'Corsair HS80 RGB Wireless Gaming Headphone', '2000.00', 'Corsair HS80 RGB Wireless Gaming Headphone for long time game playing with 1 years usage warranty.', 31, '2021-12-08', 'PIMG-61b09cb1dac04.jpg', 'PIMG-61b09cb1dc2fa.jpg', 'C#006', 'S#001'),
+(30, 'PROD#0030', 'Meetion MT-GM22 Dazzling Gaming Mouse', '1500.00', 'The Meetion MT-GM22 has been ergonomically designed for a comfortable  use.It has 6 months warranty.', 20, '2021-12-07', 'PIMG-61afcbdc60619.jpg', 'PIMG-61afcbdc621c1.jpg', 'C#008', 'S#001'),
+(31, 'PROD#0031', 'Corsair HS80 RGB Wireless Gaming Headphone', '2000.00', 'Corsair HS80 RGB Wireless Gaming Headphone for long time game playing with 1 years usage warranty.', 28, '2021-12-08', 'PIMG-61b09cb1dac04.jpg', 'PIMG-61b09cb1dc2fa.jpg', 'C#006', 'S#001'),
 (32, 'PROD#0032', 'Avita Magus Celeron N3350 12.2\" FHD Laptop Charcoal Grey', '30000.00', 'Avita Magus Laptop comes with Intel Celeron Processor N3350 (1.10 GHz- 2.5 GHz). Long battery life and durable laptop with 1 years warranty. ', 28, '2021-12-14', 'PIMG-61b88c6712f78.jpg', 'PIMG-61b88c6714a6f.jpg', 'C#002', 'S#001'),
-(33, 'PROD#0033', 'Avita Magus Celeron N3350 12.2\" FHD Laptop Steel Blue', '33000.00', 'Avita Magus Laptop comes with Intel Celeron Processor N3350 (1.10 GHz- 2.5 GHz). Long battery life and durable laptop with 1 years warranty. ', 40, '2021-12-14', 'PIMG-61b88d78d6abc.jpg', 'PIMG-61b88d78d794f.jpg', 'C#002', 'S#001'),
-(34, 'PROD#0034', 'Avita Magus Celeron N3350 12.2\" FHD Laptop Seashell Pink', '40500.00', 'Avita Magus Laptop comes with Intel Celeron Processor N3350 (1.10 GHz-', 38, '2021-12-14', 'PIMG-61b88e4b0ea65.jpg', 'PIMG-61b88e4b100c3.jpg', 'C#002', 'S#001'),
+(33, 'PROD#0033', 'Avita Magus Celeron N3350 12.2\" FHD Laptop Steel Blue', '33000.00', 'Avita Magus Laptop comes with Intel Celeron Processor N3350 (1.10 GHz- 2.5 GHz). Long battery life and durable laptop with 1 years warranty. ', 38, '2021-12-14', 'PIMG-61b88d78d6abc.jpg', 'PIMG-61b88d78d794f.jpg', 'C#002', 'S#001'),
+(34, 'PROD#0034', 'Avita Magus Celeron N3350 12.2\" FHD Laptop Seashell Pink', '40500.00', 'Avita Magus Laptop comes with Intel Celeron Processor N3350 (1.10 GHz-', 37, '2021-12-14', 'PIMG-61b88e4b0ea65.jpg', 'PIMG-61b88e4b100c3.jpg', 'C#002', 'S#001'),
 (35, 'PROD#0035', 'AVITA Essential 14 Celeron N4020 14\" Full HD Laptop Concrete Grey Colo', '40700.00', 'AVITA Essential 14 Celeron N4020 14\" Full HD Laptop come with Intel Celeron N4020 . This laptop comes with 1 year warranty. ', 40, '2021-12-14', 'PIMG-61b88f2298758.jpg', 'PIMG-61b88f2299752.jpg', 'C#002', 'S#001'),
 (36, 'PROD#0036', 'AVITA Essential 14 Celeron N4000 14\" Full HD Laptop Matt Black Color', '24000.00', 'AVITA Essential 14 Celeron N4000 14\" Full HD Laptop come with Intel Ce', 50, '2021-12-14', 'PIMG-61b890097c5b9.jpg', 'PIMG-61b890097d75d.jpg', 'C#002', 'S#001'),
 (37, 'PROD#0037', 'Chuwi HeroBook Pro+ intel Celeron 13.3\" 3K Laptop', '30000.00', 'Chuwi HeroBook Pro+ Laptop comes with Intel Celeron Processor J3455. It has 1 year service warranty.', 47, '2021-12-14', 'PIMG-61b8912704a6a.jpg', 'PIMG-61b8912705b6c.jpg', 'C#002', 'S#001'),
 (38, 'PROD#0038', 'AVITA Essential 14 Celeron N4000 256GB SSD 14\" Full HD Laptop Matt Bla', '30700.00', 'AVITA Essential 14 Celeron N4000 14\" Full HD Laptop come with Intel Celeron', 40, '2021-12-14', 'PIMG-61b892039b1c0.jpg', 'PIMG-61b892039ce21.jpg', 'C#002', 'S#001'),
-(39, 'PROD#0039', 'HP 15s-du1087TU Intel Celeron N4020 15.6 inch FHD Laptop with Win 10', '35700.00', 'HP P15s-du1087TU Laptop comes with Intel Celeron Processor N4020 (4M C', 48, '2021-12-14', 'PIMG-61b8930248d9a.jpg', 'PIMG-61b8930249d64.jpg', 'C#002', 'S#001'),
+(39, 'PROD#0039', 'HP 15s-du1087TU Intel Celeron N4020 15.6 inch FHD Laptop with Win 10', '35700.00', 'HP P15s-du1087TU Laptop comes with Intel Celeron Processor N4020 (4M C', 47, '2021-12-14', 'PIMG-61b8930248d9a.jpg', 'PIMG-61b8930249d64.jpg', 'C#002', 'S#001'),
 (40, 'PROD#0040', 'HP 15s-du1115TU Celeron N4020 15.6\" HD Laptop', '35800.00', 'The 15s-du1115TU powered by Intel Celeron N4020 (1.1 GHz up to 2.8 GHz', 50, '2021-12-14', 'PIMG-61b894118da45.jpg', 'PIMG-61b894118f505.jpg', 'C#002', 'S#001'),
 (41, 'PROD#0041', 'AVITA Essential 14 Celeron N4020 256GB SSD 14\" Full HD Laptop Matt Whi', '31500.00', 'AVITA Essential 14 Celeron N4020 14\" Full HD Laptop come with Intel Ce', 40, '2021-12-14', 'PIMG-61b894cdb06f6.jpg', 'PIMG-61b894cdb1d5d.jpg', 'C#002', 'S#001'),
 (42, 'PROD#0042', 'Asus PN40 Celeron Dual Core Mini PC', '16800.00', 'The new ASUS Mini PC PN40 is the ideal solution for both home entertai', 36, '2021-12-14', 'PIMG-61b8962faeab6.jpg', 'PIMG-61b8962fb0234.jpg', 'C#003', 'S#001'),
@@ -276,10 +285,11 @@ INSERT INTO `product` (`id`, `product_id`, `product_name`, `product_unit_price`,
 (46, 'PROD#0046', 'Intel 10th Gen Core i3 10100F Processor', '88000.00', 'This processor comes with a new breed that come without an integrated ', 40, '2021-12-14', 'PIMG-61b89f7078d2a.jpg', 'PIMG-61b89f707a69b.jpg', 'C#004', 'S#0010'),
 (47, 'PROD#0047', 'Intel 10th Gen Core i3 10100 Processor (Tray)', '11500.00', 'This processor comes with a new breed that come with an enabled integr', 40, '2021-12-14', 'PIMG-61b8a08d08b22.jpg', 'PIMG-61b8a08d0a60b.jpg', 'C#004', 'S#0010'),
 (48, 'PROD#0048', 'Deepcool GH-01 A-RGB Graphics Card Holder', '1570.00', 'Deepcool GH-01 A-RGB Graphics Card Holder is a gaming accessory focuse', 40, '2021-12-14', 'PIMG-61b8b34667011.jpg', 'PIMG-61b8b34668700.jpg', 'C#005', 'S#0011'),
-(49, 'PROD#0049', 'Edifier G20 7.1 Surround Sound Wired Gaming Headset (Black)', '5000.00', 'Edifier G20 is a 7.1 Surround Sound supported Wired Gaming Headset ava', 38, '2021-12-14', 'PIMG-61b8b78553af3.jpg', 'PIMG-61b8b78554a4e.jpg', 'C#006', 'S#006'),
+(49, 'PROD#0049', 'Edifier G20 7.1 Surround Sound Wired Gaming Headset (Black)', '5000.00', 'Edifier G20 is a 7.1 Surround Sound supported Wired Gaming Headset ava', 37, '2021-12-14', 'PIMG-61b8b78553af3.jpg', 'PIMG-61b8b78554a4e.jpg', 'C#006', 'S#006'),
 (50, 'PROD#0050', 'MeeTion MT-C500 4 in 1 Backlit Gaming Combo', '10000.00', 'MeeTion MT-C500 comes with 4 in 1 Backlit Gaming Combo. This Combo has', 10, '2021-12-14', 'PIMG-61b8b88555814.jpg', 'PIMG-61b8b88556865.jpg', 'C#007', 'S#007'),
 (51, 'PROD#0051', 'Meetion MT-K800 Colored Big Keys Kids Keyboard', '3000.00', 'The Meetion MT-K800 comes with 84 Keys Color Coded. It has green, blue', 40, '2021-12-14', 'PIMG-61b8b93a4ee6a.jpg', 'PIMG-61b8b93a50152.jpg', 'C#007', 'S#007'),
-(54, 'PROD#0052', 'Viltrox EF-EOS M Lens Mount Adapter for Canon Cameras', '7000.00', 'Test Test', 118, '2021-12-14', 'PIMG-61b8d208c930f.jpg', 'PIMG-61b8d208caa77.jpg', 'C#009', 'S#002');
+(54, 'PROD#0052', 'Viltrox EF-EOS M Lens Mount Adapter for Canon Cameras', '7000.00', 'Test Test', 118, '2021-12-14', 'PIMG-61b8d208c930f.jpg', 'PIMG-61b8d208caa77.jpg', 'C#009', 'S#002'),
+(55, 'PROD#0055', 'AMD Ryzen 7 3700X Processor', '26500.00', 'The AMD Ryzen 7 3700X processor is built in True machine intelligence featuring 8 processor cores, 16 threads, and an astonishingly efficient 65W TDP. ', 10, '2021-12-15', 'PIMG-61b9cec45f8c7.jpg', 'PIMG-61b9cec461462.jpg', 'C#004', 'S#002');
 
 -- --------------------------------------------------------
 
@@ -321,7 +331,7 @@ INSERT INTO `seller` (`id`, `seller_id`, `seller_name`, `seller_contact_number`,
 (1, 'S#001', 'abdul', '01892783788', 'Malibagh,dhaka', 'U#002'),
 (10, 'S#0010', 'Akhtar', NULL, NULL, 'U#0012'),
 (11, 'S#0011', 'Parvin', NULL, NULL, 'U#0013'),
-(3, 'S#002', 'Kamal', NULL, NULL, 'U#004'),
+(3, 'S#002', 'Kamal', '0186745678', 'Rupsha Nodi, Rupsha', 'U#004'),
 (4, 'S#004', 'Jamal', NULL, NULL, 'U#006'),
 (5, 'S#005', 'Hossain', NULL, NULL, 'U#007'),
 (6, 'S#006', 'Karim', NULL, NULL, 'U#008'),
@@ -500,19 +510,19 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `description`
 --
 ALTER TABLE `description`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `sales_report`
